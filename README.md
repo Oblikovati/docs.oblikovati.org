@@ -78,13 +78,22 @@ imported page names one.
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and then
 triggers a DigitalOcean App Platform deployment via `doctl`.
 
+The app is described declaratively in [`.do/app.yaml`](.do/app.yaml) (a Node static-site
+build, output `build/`), which the deploy workflow applies on each push.
+
 ### One-time bootstrap
 
-1. Create an App Platform **static site** app pointing at this repo, with build command
-   `npm run build` and output directory `build`.
+1. Create the app from the committed spec:
+   ```bash
+   doctl apps create --spec .do/app.yaml
+   ```
+   (Or, to convert an existing app such as the sample-html placeholder, run
+   `doctl apps update <app-id> --spec .do/app.yaml`.)
 2. Note the app id (`doctl apps list`).
 3. Add two GitHub repository secrets:
    - `DIGITALOCEAN_ACCESS_TOKEN` — a DO API token with app write access
    - `DO_APP_ID` — the app id from step 2
+4. Point DNS `docs.oblikovati.org` (CNAME) at the app's `*.ondigitalocean.app` hostname.
+   Until it resolves, drop the `domains:` block in the spec to deploy on the default URL.
 
 Pull requests run `.github/workflows/ci.yml`, which builds every locale as a merge gate.
