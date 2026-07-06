@@ -23,9 +23,9 @@ the build version, so match by the suffix:
 
 | Platform | Asset | Run it |
 | --- | --- | --- |
-| **Linux** (x86-64) | `oblikovati-head-*-linux-amd64.AppImage` | `chmod +x` the file, then run it |
-| **Windows** (x86-64) | `oblikovati-head-*-windows-amd64.zip` | Unzip, then run the executable |
-| **macOS** (universal) | `Oblikovati-*-macos-universal.zip` | Unzip, then open `Oblikovati.app` |
+| **Linux** (x86-64) | `oblikovati-*-linux-amd64.AppImage` | `chmod +x` the file, then run it |
+| **Windows** (x86-64) | `oblikovati-*-windows-amd64.zip` | Unzip, then run the executable |
+| **macOS** (universal) | `oblikovati-*-macos-universal.zip` | Unzip, then open `Oblikovati.app` |
 
 ## Command-line tool
 
