@@ -1,0 +1,35 @@
+name: Deploy
+
+# On every push to main: build the site (fails fast if broken), then trigger a DigitalOcean
+# App Platform deployment of the static site. DO builds and serves the site from this repo;
+# this workflow is the CI-gated trigger.
+#
+# Required repository secrets:
+#   DIGITALOCEAN_ACCESS_TOKEN  — a DO API token with app write access
+#   DO_APP_ID                  — the id of the App Platform app (see README bootstrap notes)
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Build (validation before deploy)
+        run: npm run build
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Trigger App Platform deployment
+        run: doctl apps create-deployment "${{ secrets.DO_APP_ID }}" --wait

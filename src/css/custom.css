@@ -1,0 +1,80 @@
+/**
+ * Oblikovati docs theme. The palette and typography are taken verbatim from
+ * website-oblikovati.org (tailwind.config.js + index.css) so the docs site reads as the
+ * same product: a deep engineering-grade dark surface, the teal->sky "signal" accent, and
+ * the Albert Sans / Newsreader / JetBrains Mono type system. The site is dark-first; a
+ * legible light theme is kept for long-form reading.
+ */
+
+:root {
+  /* Brand accent: the logo gradient's sky endpoint (#38bdf8), with shades for Infima. */
+  --ifm-color-primary: #0ea5e9;
+  --ifm-color-primary-dark: #0d94d1;
+  --ifm-color-primary-darker: #0c8bc5;
+  --ifm-color-primary-darkest: #0a72a2;
+  --ifm-color-primary-light: #24b0ec;
+  --ifm-color-primary-lighter: #33b6ed;
+  --ifm-color-primary-lightest: #5bc5f1;
+
+  --ifm-font-family-base: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --ifm-heading-font-family: 'Albert Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+
+  --ifm-code-font-size: 90%;
+  --ifm-heading-font-weight: 800;
+  --ifm-heading-letter-spacing: -0.02em;
+  --docusaurus-highlighted-code-line-bg: rgba(56, 189, 248, 0.12);
+
+  /* Brand tokens reused by custom components (KeyboardMap). */
+  --obk-signal: #38bdf8;
+  --obk-signal-soft: #5eead4;
+  --obk-signal-deep: #0ea5e9;
+}
+
+/* Dark is the brand default (website-oblikovati.org is dark-only). */
+[data-theme='dark'] {
+  --ifm-color-primary: #38bdf8;
+  --ifm-color-primary-dark: #1eb0f7;
+  --ifm-color-primary-darker: #0ea5e9;
+  --ifm-color-primary-darkest: #0b87bf;
+  --ifm-color-primary-light: #56c8f9;
+  --ifm-color-primary-lighter: #64ccfa;
+  --ifm-color-primary-lightest: #8fdafc;
+
+  /* Deep engineering-grade dark surfaces (ink palette). */
+  --ifm-background-color: #070b14;
+  --ifm-background-surface-color: #0b1220;
+  --ifm-navbar-background-color: #0b1220;
+  --ifm-footer-background-color: #0b1220;
+  --ifm-card-background-color: #0e1626;
+  --ifm-color-content: #cdd9e8;
+  --ifm-color-content-secondary: #a9bace;
+  --ifm-toc-border-color: #1a2942;
+  --ifm-hr-border-color: #1a2942;
+  --docusaurus-highlighted-code-line-bg: rgba(56, 189, 248, 0.16);
+}
+
+/* Body is the reading serif; headings and the wordmark are the geometric display sans —
+   matching website-oblikovati.org's Overlay-derived type system. */
+body {
+  text-rendering: optimizeLegibility;
+}
+
+.navbar__title,
+.footer__title {
+  font-family: var(--ifm-heading-font-family);
+  letter-spacing: -0.015em;
+}
+
+::selection {
+  background-color: rgba(56, 189, 248, 0.28);
+  color: #e6edf6;
+}
+
+/* Code blocks (incl. ```lua scripting samples) sit on an elevated ink surface. */
+[data-theme='dark'] .theme-code-block,
+[data-theme='dark'] pre[class*='language-'] {
+  background-color: #0e1626 !important;
+  border: 1px solid #1a2942;
+}

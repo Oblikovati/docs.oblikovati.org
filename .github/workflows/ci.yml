@@ -1,0 +1,20 @@
+name: CI
+
+# Build-validation gate: a broken build (including a broken link or a broken locale) fails
+# the PR before it can be merged and deployed. Docusaurus builds every configured locale by
+# default, so this exercises en, pt-BR and es.
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
