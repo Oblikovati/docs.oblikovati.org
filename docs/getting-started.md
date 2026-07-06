@@ -15,16 +15,13 @@ Oblikovati is scriptable with **Lua**. Scripts drive the same document and featu
 the UI does, so anything you can model by hand you can automate:
 
 ```lua
--- Create a parametric plate and extrude it.
-local part = app.new_part("plate")
-local sketch = part:new_sketch("XY")
+oblikovati.documents.create{ type = "part", name = "plate" }
+oblikovati.sketch.create{ plane = "XY" }
+oblikovati.sketch.rectangle{ sketchIndex = 0, width = "40 mm", height = "30 mm" }
+oblikovati.features.add{ kind = "extrude",
+  args = { sketchIndex = 0, profileIndex = 0, distance = "10 mm" } }
 
-local w = part:parameter("width", 60)   -- mm
-local h = part:parameter("height", 40)  -- mm
-sketch:rectangle(0, 0, w, h)
-
-part:extrude(sketch, { distance = part:parameter("thickness", 5) })
-part:save("plate.opd")
+print(string.format("volume = %.3f cm3", oblikovati.model.physicalProperties().volume))
 ```
 
-Fenced ` ```lua ` blocks are syntax-highlighted throughout these docs.
+See the [Scripting with Lua](./scripting.mdx) guide for the full introduction and examples.

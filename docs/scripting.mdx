@@ -1,0 +1,295 @@
+---
+sidebar_position: 3
+title: Scripting with Lua
+description: Automate modeling in Oblikovati with the embedded, sandboxed Lua scripting API.
+---
+
+# Scripting with Lua
+
+Oblikovati embeds a sandboxed [Lua](https://www.lua.org/) interpreter so you can drive the
+live model with a script — the same automation surface add-ins and the MCP bridge use, reached
+through a single host table called `oblikovati`. Anything you can model by hand you can
+automate: create documents, draw sketches, add features, drive dimensions from parameters, and
+read results back.
+
+The surface is large — **585 methods across ~90 groups** — but you only need a handful to be
+productive. This page introduces the model and walks through worked examples, every one of
+which ships with the application (`script/examples`) and is covered by tests.
+
+## Running a script
+
+- **GUI** — open the **Scripts** console on the **Manage** ribbon tab, paste a program, and
+  run it.
+- **CLI (headless)** — `oblikovati-cli script run myscript.lua`. Open an existing document and
+  save the result with `--doc` / `--save`:
+
+  ```bash
+  oblikovati-cli script run build.lua --doc in.opd --save out.opd
+  ```
+
+- **Automation / MCP** — call the `scripts.run` wire method (the `run_script` MCP tool) with
+  the program source.
+
+## Your first script
+
+Sketch a rectangle, extrude it into a solid block, and print its volume:
+
+```lua
+oblikovati.documents.create{ type = "part", name = "first-block" }
+oblikovati.sketch.create{ plane = "XY" }
+oblikovati.sketch.rectangle{ sketchIndex = 0, width = "40 mm", height = "30 mm" }
+
+oblikovati.features.add{ kind = "extrude",
+  args = { sketchIndex = 0, profileIndex = 0, distance = "10 mm" } }
+
+local props = oblikovati.model.physicalProperties()
+print(string.format("volume = %.3f cm3", props.volume))
+```
+
+```text
+volume = 12.000 cm3
+```
+
+A 40×30 mm rectangle extruded 10 mm is a 4×3×1 cm block — 12 cm³.
+
+## The `oblikovati` table
+
+Everything the host exposes hangs off the global `oblikovati` table. Every method is callable
+two equivalent ways:
+
+```lua
+-- generic form: method name + a table of arguments
+local doc = oblikovati.call("documents.create", { type = "part", name = "demo" })
+
+-- typed group form (sugar over the same call): oblikovati.<group>.<method>{ … }
+local doc = oblikovati.documents.create{ type = "part", name = "demo" }
+```
+
+Both pass **arguments as a single table** and **return the result as a table**. The typed
+group form is generated from the live method list, so it can never fall behind the API.
+
+```lua
+local doc = oblikovati.documents.create{ type = "part", name = "demo" }
+print(doc.id, doc.name, doc.active) -- 1  demo  true
+```
+
+`oblikovati.methods()` returns the full list of callable method names, so a script can
+discover the surface at runtime.
+
+## Units and coordinates
+
+- **Dimensions accept unit-bearing expressions** as strings: `"40 mm"`, `"3 in"`, `"360 deg"`.
+  They are parsed in the document's unit system, so you can mix units freely.
+- **A dimension can reference a parameter by name** — this is how you keep a design dynamic
+  (see [A fully parametric part](#a-fully-parametric-part) below).
+- **Raw sketch coordinates are in centimetres** — the database unit. In
+  `points = {{0, 0}, {4, 0}}` the numbers are cm.
+- **Values read back** (parameter values, etc.) come in the document's display units, so a
+  parameter defined as `"3 in"` reads back as `76.2 mm`.
+
+## Output and errors
+
+`print(...)` writes to the console / CLI output (it cannot reach a real file). A failed call
+raises a Lua error naming the method; wrap calls in `pcall` to handle them:
+
+```lua
+local ok, err = pcall(function()
+  oblikovati.documents.create{ type = "part" } -- missing required 'name'
+end)
+if not ok then print("call failed: " .. tostring(err)) end
+```
+
+## Sandbox and limits
+
+The interpreter is locked down. The `string`, `table` and `math` standard libraries are
+available, but `os`, `io`, `debug`, `require`/`load` and the filesystem are **not** — a script
+can only touch the model through `oblikovati`. Each run is bounded by a wall-clock deadline and
+an approximate memory cap, so a runaway can never freeze the host.
+
+:::note
+To read or write files, drive the CLI with `--doc` / `--save` (above) rather than opening
+files from inside the script — the sandbox forbids filesystem access by design.
+:::
+
+## Worked examples
+
+### Drawing a sketch
+
+`sketch.addEntity` adds one entity at a time; `sketch.rectangle` adds four lines at once. Here
+a closed triangle plus a rectangle land on one sketch:
+
+```lua
+oblikovati.documents.create{ type = "part", name = "sketch-lines-demo" }
+oblikovati.sketch.create{ plane = "XY" }
+
+-- Triangle: each line starts where the previous ended, closing back to the origin.
+oblikovati.sketch.addEntity{ sketchIndex = 0, kind = "line", points = {{0, 0}, {4, 0}} }
+oblikovati.sketch.addEntity{ sketchIndex = 0, kind = "line", points = {{4, 0}, {2, 3}} }
+oblikovati.sketch.addEntity{ sketchIndex = 0, kind = "line", points = {{2, 3}, {0, 0}} }
+
+-- A 5x5 cm rectangle adds four more lines.
+oblikovati.sketch.rectangle{ sketchIndex = 0, width = "5 cm", height = "5 cm" }
+
+local ents = oblikovati.sketch.entities{ sketchIndex = 0 }
+local lines = 0
+for _, e in ipairs(ents.entities) do
+  if e.kind == "line" then lines = lines + 1 end
+end
+print("lines = " .. lines) -- lines = 7
+```
+
+### Revolving a profile
+
+A closed rectangular profile offset from the Y axis revolves into a tube:
+
+```lua
+oblikovati.documents.create{ type = "part", name = "revolve-tube-demo" }
+oblikovati.sketch.create{ plane = "XY" }
+
+oblikovati.sketch.addEntity{ sketchIndex = 0, kind = "line", points = {{1, 0}, {3, 0}} }
+oblikovati.sketch.addEntity{ sketchIndex = 0, kind = "line", points = {{3, 0}, {3, 2}} }
+oblikovati.sketch.addEntity{ sketchIndex = 0, kind = "line", points = {{3, 2}, {1, 2}} }
+oblikovati.sketch.addEntity{ sketchIndex = 0, kind = "line", points = {{1, 2}, {1, 0}} }
+
+oblikovati.features.add{ kind = "revolve",
+  args = { sketchIndex = 0, profileIndex = 0, angle = "360 deg" } }
+
+print(string.format("volume = %.3f cm3", oblikovati.model.physicalProperties().volume))
+```
+
+```text
+volume = 49.943 cm3
+```
+
+The profile spans radius 1–3 cm and height 2 cm, so the volume approaches π·(3²−1²)·2 = 16π ≈
+50.27 cm³; the printed value is the tessellated approximation.
+
+### Reading mass properties
+
+`model.physicalProperties()` returns `volume`, `area` and `centroid` for the current model — a
+2 cm cube here:
+
+```lua
+oblikovati.documents.create{ type = "part", name = "mass-properties-demo" }
+oblikovati.sketch.create{ plane = "XY" }
+oblikovati.sketch.rectangle{ sketchIndex = 0, width = "20 mm", height = "20 mm" }
+oblikovati.features.add{ kind = "extrude",
+  args = { sketchIndex = 0, profileIndex = 0, distance = "20 mm" } }
+
+local p = oblikovati.model.physicalProperties()
+print(string.format("volume = %.3f cm3", p.volume))
+print(string.format("area = %.3f cm2", p.area))
+print(string.format("centroid = (%.3f, %.3f, %.3f) cm", p.centroid[1], p.centroid[2], p.centroid[3]))
+```
+
+```text
+volume = 8.000 cm3
+area = 24.000 cm2
+centroid = (1.000, 1.000, 1.000) cm
+```
+
+### Working with parameters
+
+Add user parameters with unit-bearing expressions, then list or change them:
+
+```lua
+oblikovati.documents.create{ type = "part", name = "parameters-demo" }
+
+oblikovati.parameters.add{ name = "Width", expression = "3 in" }
+oblikovati.parameters.add{ name = "Height", expression = "40 mm" }
+
+oblikovati.parameters.set{ name = "Width", expression = "3.5 in" } -- change it
+print(oblikovati.parameters.get{ name = "Width" }.value)          -- 88.9 mm
+
+for _, p in ipairs(oblikovati.parameters.list().parameters) do
+  print(p.name .. " = " .. p.value)
+end
+```
+
+```text
+88.9 mm
+Width = 88.9 mm
+Height = 40 mm
+```
+
+## A fully parametric part
+
+The real power of scripting is a *dynamic* design: drive every dimension from a parameter, then
+change one parameter and let the model recompute. This is the recommended way to build in
+Oblikovati.
+
+```lua
+oblikovati.documents.create{ type = "part", name = "parametric-plate" }
+
+-- Drive every dimension from a parameter.
+oblikovati.parameters.add{ name = "Width",     expression = "40 mm" }
+oblikovati.parameters.add{ name = "Height",    expression = "30 mm" }
+oblikovati.parameters.add{ name = "Thickness", expression = "10 mm" }
+
+oblikovati.sketch.create{ plane = "XY" }
+oblikovati.sketch.rectangle{ sketchIndex = 0, width = "Width", height = "Height" }
+oblikovati.features.add{ kind = "extrude",
+  args = { sketchIndex = 0, profileIndex = 0, distance = "Thickness" } }
+
+print(string.format("initial volume = %.3f cm3", oblikovati.model.physicalProperties().volume))
+
+-- Change one parameter; the model recomputes and the volume follows.
+oblikovati.parameters.set{ name = "Thickness", expression = "25 mm" }
+print(string.format("updated volume = %.3f cm3", oblikovati.model.physicalProperties().volume))
+```
+
+```text
+initial volume = 12.000 cm3
+updated volume = 30.000 cm3
+```
+
+Because the rectangle's `width`/`height` and the extrude `distance` are bound to `Width`,
+`Height` and `Thickness`, changing `Thickness` from 10 mm to 25 mm rebuilds the solid and the
+volume tracks it automatically.
+
+## Saving your work
+
+`documents.saveAs` writes the document to a full path. It needs the document id (returned by
+`documents.create`) and the new name:
+
+```lua
+local doc = oblikovati.documents.create{ type = "part", name = "bracket" }
+-- … model the part …
+oblikovati.documents.saveAs{ document = doc.id, newFullDocumentName = "bracket.opd" }
+```
+
+From the CLI you can skip this and let `--save` persist the active document after the run:
+`oblikovati-cli script run build.lua --save bracket.opd`.
+
+## Core methods
+
+The methods used throughout this page, with their argument tables. Discover the rest with
+`oblikovati.methods()`.
+
+| Method | Arguments | Returns |
+| --- | --- | --- |
+| `documents.create` | `type`, `name` | `{ id, name, type, active, dirty, visible }` |
+| `documents.saveAs` | `document`, `newFullDocumentName` | — |
+| `sketch.create` | `plane` | — |
+| `sketch.rectangle` | `sketchIndex`, `width`, `height` | — |
+| `sketch.addEntity` | `sketchIndex`, `kind`, `points` | — |
+| `sketch.entities` | `sketchIndex` | `{ entities }` |
+| `features.add` | `kind`, `args` | — |
+| `parameters.add` | `name`, `expression` | — |
+| `parameters.set` | `name`, `expression` | — |
+| `parameters.get` | `name` | `{ value }` |
+| `parameters.list` | — | `{ parameters }` |
+| `model.physicalProperties` | — | `{ volume, area, centroid }` |
+
+## Discovering the full API
+
+Every group and method is callable the same way. To explore at runtime:
+
+```lua
+for _, name in ipairs(oblikovati.methods()) do print(name) end
+```
+
+The surface spans documents, sketches (2D and 3D), features, parameters, assemblies and
+constraints, drawings, sheet metal, appearances, analysis, and more — 585 methods in all. The
+[Commands](./reference/commands.mdx) reference lists the interactive commands; scripting reaches
+the same modeling operations programmatically.

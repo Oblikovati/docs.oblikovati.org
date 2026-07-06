@@ -16,8 +16,10 @@ language selector in the top bar) and is versioned alongside the application.
 ## Where to start
 
 - **[Getting Started](./getting-started.md)** — install and open your first part.
+- **[Scripting with Lua](./scripting.mdx)** — automate modeling with the embedded Lua API.
 - **[Keyboard Shortcuts](./reference/keyboard-shortcuts.mdx)** — the shipped key bindings,
   shown on a keyboard and in reference tables.
+- **[Commands](./reference/commands.mdx)** — every command the command window accepts.
 
 :::note
 This documentation is under active construction. Content is being filled in
