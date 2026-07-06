@@ -35,11 +35,12 @@ const config = {
   // English is the source of truth; pt-BR and es are scaffolded for translation.
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'pt-BR', 'es'],
+    locales: ['en', 'pt-BR', 'es', 'fr'],
     localeConfigs: {
       en: { label: 'English' },
       'pt-BR': { label: 'Português (Brasil)' },
       es: { label: 'Español' },
+      fr: { label: 'Français' },
     },
   },
 

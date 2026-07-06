@@ -15,7 +15,7 @@ language selector in the top bar) and is versioned alongside the application.
 
 ## Where to start
 
-- **[Getting Started](./getting-started.md)** — install and open your first part.
+- **[Installation](./installation.md)** — download and install the latest nightly build.
 - **[Scripting with Lua](./scripting.mdx)** — automate modeling with the embedded Lua API.
 - **[Keyboard Shortcuts](./reference/keyboard-shortcuts.mdx)** — the shipped key bindings,
   shown on a keyboard and in reference tables.
