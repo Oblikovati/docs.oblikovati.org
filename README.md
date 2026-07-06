@@ -23,7 +23,8 @@ npm run serve          # serve the production build locally
 docs/                     Documentation content (served at the site root)
 src/css/custom.css        Brand theme (Infima variable overrides + fonts)
 src/components/KeyboardMap ISO keyboard SVG + shortcut tables component
-src/data/keybindings.json  Generated shortcut data (see below)
+src/components/CommandReference  Filterable command reference component
+src/data/*.json           Generated shortcut/command data (see below)
 static/img/               Logo + favicons (from website-oblikovati.org)
 i18n/{pt-BR,es}/          Locale content + UI-string translations
 ```
@@ -41,17 +42,20 @@ Translated doc pages live under
 `i18n/<locale>/docusaurus-plugin-content-docs/current/`; any page not translated there
 falls back to its English version.
 
-## Keyboard-shortcut data
+## Generated data
 
-`src/data/keybindings.json` is **generated** from the application so the published
-shortcuts never drift from what ships. It is produced by the `keymap-dump` tool in the
-[Oblikovati](https://github.com/Oblikovati) repo. Regenerate it after any default chord or
-command alias changes:
+Two data files under `src/data/` are **generated** from the application so the published
+reference never drifts from what ships. Both are produced by tools in the
+[Oblikovati](https://github.com/Oblikovati) repo:
 
-```bash
-# from a checkout of the Oblikovati application repo
-go run ./cmd/keymap-dump > /path/to/docs.oblikovati.org/src/data/keybindings.json
-```
+| File | Feeds | Generator | Regenerate |
+| --- | --- | --- | --- |
+| `keybindings.json` | Keyboard Shortcuts page (`KeyboardMap`) | `cmd/keymap-dump` | `go run ./cmd/keymap-dump > .../src/data/keybindings.json` |
+| `commands.json` | Commands page (`CommandReference`) | `cmd/command-dump` | `go run ./cmd/command-dump > .../src/data/commands.json` |
+
+Run the generators from a checkout of the Oblikovati application repo after any default
+chord, command word, or alias changes. `keybindings.json` holds only pressable keyboard
+chords; the full command vocabulary (including typed aliases) lives in `commands.json`.
 
 ## Deployment
 

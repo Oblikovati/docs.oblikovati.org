@@ -15,8 +15,9 @@ const MOD_OF = {
 
 const GROUP_ORDER = ['File', 'Sketch', 'Feature', 'View', 'Edit', 'Tool', 'Other'];
 
-const keyboardShortcuts = data.shortcuts.filter((s) => s.kind === 'keyboard');
-const aliasShortcuts = data.shortcuts.filter((s) => s.kind === 'alias');
+// keybindings.json is keyboard-only (typed command aliases are documented on the Commands
+// page); every entry here is a pressable chord.
+const keyboardShortcuts = data.shortcuts;
 
 // baseKeyMap maps a physical key code to the shortcut(s) whose chord ends on that key.
 const baseKeyMap = keyboardShortcuts.reduce((map, s) => {
@@ -146,39 +147,12 @@ function KeyboardTables() {
   });
 }
 
-function AliasTable() {
-  if (aliasShortcuts.length === 0) return null;
-  const rows = [...aliasShortcuts].sort((a, b) => a.displayName.localeCompare(b.displayName));
-  return (
-    <div className={styles.group}>
-      <h3>Command-window aliases</h3>
-      <p>
-        These are typed into the command window (AutoCAD-style), not pressed as a chord, so
-        they are not shown on the keyboard above.
-      </p>
-      <table>
-        <thead><tr><th>Alias</th><th>Command</th><th>Group</th></tr></thead>
-        <tbody>
-          {rows.map((s) => (
-            <tr key={s.actionId}>
-              <td><kbd className={styles.kbd}>{s.chordText}</kbd></td>
-              <td>{s.displayName}</td>
-              <td>{s.group}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 export default function KeyboardMap() {
   return (
     <div className={styles.wrap}>
       <KeyboardSvg />
       <Legend />
       <KeyboardTables />
-      <AliasTable />
     </div>
   );
 }

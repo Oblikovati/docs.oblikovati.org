@@ -178,13 +178,39 @@ Data shape:
 - `docs/reference/keyboard-shortcuts.mdx` — short intro prose + `<KeyboardMap/>`.
   This is the site's first real content page; linked from the sidebar and intro.
 
-The SVG depicts only pressable chords; typed aliases render in their own table
-(honest to the binding model). The command window has a fuller vocabulary —
-documenting that is out of scope for this page.
+The SVG depicts only pressable chords. `keymap-dump` emits **keyboard chords
+only** — typed command-window aliases are dropped here and documented on the
+Commands page instead (see below), so the keyboard page and the command
+reference never overlap.
+
+## Second content page: Commands
+
+A **Commands** reference lists every word the command window accepts, generated
+from the same built-in vocabulary the GitHub-wiki command manual is rendered
+from (`app/cmdline`), so the two never diverge.
+
+### Extraction — Go dumper (Oblikovati GPL repo)
+
+- `app/cmdline` gains `Vocabulary.ManualGroups()` — the structured, area-grouped
+  data behind the existing `RenderManual()` (reused, not reinvented), guarded by
+  a test that every command lands in exactly one group in reading order.
+- New headless command `cmd/command-dump/main.go` projects `ManualGroups()` into
+  `src/data/commands.json`: groups of `{ canonical, aliases, summary, example,
+  action }`. Guarded by a `go test`.
+
+Ground truth captured on 2026-07-06: **211 commands across 13 area groups**.
+
+### Rendering — CommandReference component (docs repo)
+
+- `src/components/CommandReference/` renders a live **filter** over area-grouped
+  tables (Command · Aliases · Description · Example). The filter matches canonical
+  name, aliases, and description.
+- `docs/reference/commands.mdx` — short intro + `<CommandReference/>`, cross-linked
+  with the Keyboard Shortcuts page.
 
 ## Out of scope
 
-- Writing the rest of the documentation content (only intro + this page + stubs).
+- Writing the rest of the documentation content (only intro + the Keyboard
+  Shortcuts and Commands pages + stubs).
 - Translating any content (only locale scaffolding).
 - Cutting a numbered docs version (versioning enabled; first cut done later).
-- The full command-window alias vocabulary (only the catalog's bound aliases).
