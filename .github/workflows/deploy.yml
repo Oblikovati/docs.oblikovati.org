@@ -1,8 +1,13 @@
 name: Deploy
 
-# On every push to main: build the site (fails fast if broken), then push the committed app
-# spec (.do/app.yaml) to DigitalOcean App Platform, which redeploys the static site from this
-# repo. The committed spec is the source of truth; DO builds and serves the site.
+# On every push to main: build the site (fails fast if broken), then trigger a DigitalOcean
+# App Platform deployment of the latest commit. `create-deployment` fetches the newest commit
+# on the app's branch; `--force-rebuild` skips the build cache so nothing stale is served.
+#
+# NOTE: this does NOT re-apply .do/app.yaml. `create-deployment` uses the app's stored spec.
+# After changing .do/app.yaml, apply it once: `doctl apps update <DO_APP_ID> --spec .do/app.yaml`.
+# (We avoid `apps update --spec` here because, when the spec is unchanged, it redeploys the
+# PREVIOUS commit instead of the latest.)
 #
 # Required repository secrets:
 #   DIGITALOCEAN_ACCESS_TOKEN  — a DO API token with app write access
@@ -31,5 +36,5 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Apply spec and deploy
-        run: doctl apps update "${{ secrets.DO_APP_ID }}" --spec .do/app.yaml --wait
+      - name: Deploy latest commit
+        run: doctl apps create-deployment "${{ secrets.DO_APP_ID }}" --force-rebuild --wait
