@@ -1,0 +1,199 @@
+---
+title: "API Architecture"
+sidebar_position: 4
+---
+
+<!-- Synced from Oblikovati.API by scripts/sync-addin-docs.py. Do not edit here. -->
+
+The public automation contract is the standalone Go module **`oblikovati.org/api`**, licensed
+**Apache-2.0**. It is the single source of truth for the API surface: the host implements it,
+and add-ins build against it. This page explains its shape and how to use it well.
+
+## Invariant: the contract never imports the application
+
+`oblikovati.org/api` must **never** import the GPL application module. The dependency flows one way
+only — the app depends on the contract, not the reverse — and CI fails the build if it is ever
+violated. This is what lets a closed-source add-in link the contract without touching GPL code.
+
+## The four packages
+
+| Package | Holds | Use it for |
+|---|---|---|
+| `types` | enums, stable ids, value/option structs — **pure data** | the shared vocabulary (document kinds, parameter kinds, 2D points, ribbon keys, …) |
+| `contract` | in-process Go interfaces (`Document`, `Parameter`, `Sketch`, …) | **first-party, in-process** code only (one Go runtime) |
+| `wire` | method-name constants + JSON request/response DTOs | the host↔add-in JSON contract |
+| `client` | a `Transport` interface + a typed client over it | **out-of-runtime add-ins** driving the host |
+
+### `types` — the vocabulary
+
+Pure data with stable JSON tags and frozen string/numeric values. Define a concept once here and
+both sides speak it. Examples: `DocumentType`, `ParameterKind`, `RibbonKey`, `ButtonStyle`,
+`Environment`, `WorkPlaneKind`, the graphics and lighting enums. The application aliases each
+(`type X = types.X`) so it shares the exact definition.
+
+### `contract` — in-process interfaces
+
+Scalar Go interfaces (`Application`, `Document`, `PartDocument`, `Parameters`, `Parameter`,
+`Sketch`, …) that the host satisfies with compile-time assertions. These are for code running in
+**the same Go runtime as the host** (first-party). A C-ABI add-in runs its *own* runtime, so a
+live Go interface value cannot cross to it — add-ins use `wire` + `client` instead.
+
+### `wire` — the JSON contract
+
+The bytes that actually cross the boundary:
+
+- **Method-name constants** (`wire.MethodSketchCreate = "sketch.create"`, …). The host router
+  keys its dispatch on these; treat the string values as **frozen**.
+- **Request/response DTOs** (`CreateSketchArgs`, `AddFeatureArgs`, `DocumentInfo`, …) with stable
+  JSON tags. A field rename is a breaking change.
+
+Operations are grouped by prefix. The surface spans the whole application, not just part
+modeling:
+
+- **Documents & recipe** — `documents.*`, `parameters.*`, `model.*`, `modelStates.*`,
+  `sketch.*`, `sketch3d.*`, `features.*`
+- **Datums & transient geometry** — `workPlanes.*`, `workPoints.*`, `workSurfaces.*`,
+  `body.*`, `face.*`, `brep.*`, `freeform.*`
+- **Assemblies** — `assembly.*`, `assemblyConstraints.*`, `assemblyJoints.*`,
+  `assemblyFeatures.*`, `assemblyDrive.*`, `contactSets.*`, `interference.*`
+- **Representations** — `designReps.*`, `positionalReps.*`, `lodReps.*`
+- **View & appearance** — `view.*`, `views.*`, `lighting.*`, `environment.*`,
+  `appearances.*`, `materials.*`, `theme.*`, `clientGraphics.*`, `interactionGraphics.*`
+- **Shell & interaction** — `ribbon.*`, `commands.*`, `keymap.*`, `commandLine.*`,
+  `windows.*`, `dockableWindows.*`, `dialogs.*`, `miniToolbars.*`, `browser.*`, `triad.*`,
+  `manipulators.*`, `progress.*`
+- **Automation & app** — `application.*`, `addins.*`, `scripts.*` (embedded Lua),
+  `transaction.*`, `file.*`, `fonts.*`, `options.*`, `logs.*`
+
+The [API Docs](/addins/api-reference) page is the exhaustive, always-current reference generated from the source.
+
+### `client` — the typed façade
+
+`client.Client` wraps a `Transport` and gives you typed method groups instead of hand-rolled
+JSON. Each group mirrors a wire prefix:
+
+```go
+c := client.New(transport)
+
+// Documents & the recipe
+c.Documents()   // create / list / activate documents
+c.Parameters()  // add / get / set / list named parameters
+c.Sketch()      // create sketches, add geometry, constrain, solve, list profiles
+c.Sketch3D()    // the 3D-sketch equivalent
+c.Features()    // list feature kinds (+schema) and add features
+c.Model()       // model tree, selection, reference keys, physical properties
+c.ModelStates() // model states (configurations)
+
+// Datums & transient geometry
+c.WorkPlanes()  // construct datum planes, redefine a placed one in place
+c.WorkPoints()  // datum points at a fixed position
+c.Body()        // c.TransientBRep(), c.WorkSurfaces(), c.Freeform()
+
+// Assemblies
+c.Assembly()              // place / transform / ground / suppress occurrences (+ batch place)
+c.AssemblyConstraints()   // mate / flush / angle / insert relationships
+c.AssemblyJoints()        // c.DSJoints(): rigid / rotational / slider / … joints
+c.AssemblyFeatures()      // c.AssemblyDrive(), c.ContactSets(), c.Interference()
+
+// Representations
+c.DesignReps()  // c.PositionalReps(), c.LODReps()
+
+// View, appearance & graphics
+c.View()        // c.Views(): display mode, camera, shadows, named views
+c.Lighting()    // lighting style + discrete lights
+c.Materials()   // material library + assignment
+c.Theme(), c.Appearances(), c.Graphics(), c.Interaction() // styling + overlay graphics
+
+// Shell & interaction
+c.Commands()    // list / execute / create ribbon commands
+c.Ribbon()      // discover the active ribbon's tabs/panels/controls
+c.Keymap()      // command aliases & keyboard shortcuts
+c.Windows(), c.DockableWindows(), c.Dialogs(), c.Browser(), c.MiniToolbars(), c.Triad()
+
+// Automation & app
+c.Application()  // host info, including the API version (apiVersion)
+c.AddIns()       // c.Scripts() (embedded Lua), c.Files(), c.Transactions(), c.Options()
+```
+
+That is a representative slice; the [API Docs](/addins/api-reference) page lists every group and method.
+
+## The one dependency: `Transport`
+
+The client's only requirement is a `Transport`:
+
+```go
+type Transport interface {
+	Call(method string, req []byte) ([]byte, error)
+}
+```
+
+A C-ABI add-in backs it with the host's `ObkHostCall` callback (see [First Steps](./first-steps.md)); a test
+backs it with a fake. Everything else in `client` is built on this single method.
+
+## The two consumption paths
+
+A C-shared add-in runs its **own Go runtime** — two runtimes in one process, so a live Go
+pointer/interface must not cross the boundary. The contract therefore serves two audiences:
+
+- **In-process / first-party** code uses `contract` interfaces + `types` directly.
+- **Out-of-runtime add-ins** use `wire` + `client` over a `Transport`, where the only thing that
+  crosses the boundary is JSON. A future gRPC/socket transport can sit behind the same `wire`
+  surface unchanged.
+
+```
+First-party (same runtime)            Add-in (own runtime)
+   contract + types                      wire + client
+        │                                     │
+        ▼                                     ▼
+   ┌──────────────────────────────────────────────┐
+   │              Oblikovati host                   │
+   │   implements contract · serves wire methods    │
+   └──────────────────────────────────────────────┘
+```
+
+## Adding to the API surface
+
+Every change is **two parts, in this order**:
+
+1. **Contract first, in `oblikovati.org/api`:**
+   - enum / value type → `types` (define it **once** here),
+   - in-proc Go interface → `contract`,
+   - method-name constant + request/response DTOs → `wire`,
+   - a typed method group → `client` for any new wire method.
+2. **Implementation in the application:** build the behavior, satisfy the `contract` interface
+   with a compile-time assertion (`var _ contract.X = (*impl.X)(nil)`), and wire the handler into
+   the host router keyed on the `wire` method constant.
+
+Rules of thumb:
+
+- Never re-declare a DTO or method string outside `wire` — import it.
+- Never call the host from an add-in with raw JSON — use `client`.
+- Every exported `.go` file carries an `SPDX-License-Identifier: Apache-2.0` header.
+
+## Conventions you'll rely on
+
+- **Units are explicit.** Lengths are unit-bearing expression strings (`"40 mm"`, `"5 cm"`).
+- **Database units are centimetres.** Physical properties come back in cm³ / cm² (and grams with
+  a density).
+- **References are strings.** Faces/edges/planes are addressed by reference keys the host tracks
+  across recompute.
+- **Stable identities.** Method strings and enum values are frozen — saved automations depend on
+  them.
+
+## Versioning & compatibility
+
+The contract follows [Semantic Versioning](https://semver.org). `api.Version` (with `api.Major()`
+and `api.Minor()`) is the single source of truth, and each release is tagged `vX.Y.Z` on the repo.
+Pin a release with `require oblikovati.org/api vX.Y.Z` (or `go get oblikovati.org/api@latest`).
+
+- **Releases are automatic.** On every merge to `develop`, CI derives the next version from the
+  **scope of the merged commits** (conventional commits: `feat` → minor, `fix` → patch,
+  `!`/`BREAKING CHANGE` → major; while `0.x`, both feat and breaking move minor), bumps
+  `version.go` + `CHANGELOG.md`, tags it, and publishes the GitHub release. See `RELEASING.md`.
+- **A load-time handshake protects add-ins.** An add-in exports the major/minor it was compiled
+  against (`ObkAddInApiMajor`/`ObkAddInApiMinor`, derived from `api.Major()`/`api.Minor()`). The
+  host loads it only when the **major matches** and the add-in's **minor is ≤ the host's** — so a
+  newer host still runs an add-in built against an older minor, but not one that expects API the
+  host lacks. The full host version is readable at runtime via `application.apiVersion`.
+- **0.x is initial development.** While the major is `0` the surface may still change in any minor
+  release; there is no backward-compatibility guarantee yet.

@@ -1,0 +1,180 @@
+{
+  "source": "oblikovati.org/app Bindings().Catalog()",
+  "shortcuts": [
+    {
+      "actionId": "GetStarted.NewPart",
+      "displayName": "New Part",
+      "group": "File",
+      "chord": {
+        "key": "N",
+        "ctrl": true
+      },
+      "chordText": "Ctrl+N"
+    },
+    {
+      "actionId": "Create.Extrude",
+      "displayName": "Extrude",
+      "group": "Feature",
+      "chord": {
+        "key": "E",
+        "shift": true
+      },
+      "chordText": "Shift+E"
+    },
+    {
+      "actionId": "Create.Revolve",
+      "displayName": "Revolve",
+      "group": "Feature",
+      "chord": {
+        "key": "R",
+        "shift": true
+      },
+      "chordText": "Shift+R"
+    },
+    {
+      "actionId": "Modify.Hole",
+      "displayName": "Hole",
+      "group": "Feature",
+      "chord": {
+        "key": "H",
+        "shift": true
+      },
+      "chordText": "Shift+H"
+    },
+    {
+      "actionId": "Modify.Fillet",
+      "displayName": "Fillet",
+      "group": "Feature",
+      "chord": {
+        "key": "F",
+        "shift": true
+      },
+      "chordText": "Shift+F"
+    },
+    {
+      "actionId": "Sketch.Line",
+      "displayName": "Line",
+      "group": "Sketch",
+      "chord": {
+        "key": "L",
+        "shift": true
+      },
+      "chordText": "Shift+L"
+    },
+    {
+      "actionId": "Sketch.Circle",
+      "displayName": "Circle",
+      "group": "Sketch",
+      "chord": {
+        "key": "C",
+        "shift": true
+      },
+      "chordText": "Shift+C"
+    },
+    {
+      "actionId": "Sketch.Arc",
+      "displayName": "Arc",
+      "group": "Sketch",
+      "chord": {
+        "key": "A",
+        "shift": true
+      },
+      "chordText": "Shift+A"
+    },
+    {
+      "actionId": "Sketch.Dimension",
+      "displayName": "Dimension",
+      "group": "Sketch",
+      "chord": {
+        "key": "D",
+        "shift": true
+      },
+      "chordText": "Shift+D"
+    },
+    {
+      "actionId": "View.Close",
+      "displayName": "Close View",
+      "group": "View",
+      "chord": {
+        "key": "W",
+        "ctrl": true
+      },
+      "chordText": "Ctrl+W"
+    },
+    {
+      "actionId": "edit.undo",
+      "displayName": "Undo",
+      "group": "Edit",
+      "chord": {
+        "key": "Z",
+        "ctrl": true
+      },
+      "chordText": "Ctrl+Z"
+    },
+    {
+      "actionId": "edit.redo",
+      "displayName": "Redo",
+      "group": "Edit",
+      "chord": {
+        "key": "Y",
+        "ctrl": true
+      },
+      "chordText": "Ctrl+Y"
+    },
+    {
+      "actionId": "edit.delete",
+      "displayName": "Delete",
+      "group": "Edit",
+      "chord": {
+        "key": "Delete"
+      },
+      "chordText": "Delete"
+    },
+    {
+      "actionId": "file.save",
+      "displayName": "Save",
+      "group": "File",
+      "chord": {
+        "key": "S",
+        "ctrl": true
+      },
+      "chordText": "Ctrl+S"
+    },
+    {
+      "actionId": "tool.cancel",
+      "displayName": "Cancel / Deselect",
+      "group": "Tool",
+      "chord": {
+        "key": "Escape"
+      },
+      "chordText": "Escape"
+    },
+    {
+      "actionId": "tool.commit",
+      "displayName": "Finish Command",
+      "group": "Tool",
+      "chord": {
+        "key": "Enter"
+      },
+      "chordText": "Enter"
+    },
+    {
+      "actionId": "view.previous",
+      "displayName": "Previous View",
+      "group": "View",
+      "chord": {
+        "key": "F5"
+      },
+      "chordText": "F5"
+    },
+    {
+      "actionId": "view.home",
+      "displayName": "Home View",
+      "group": "View",
+      "chord": {
+        "key": "F6"
+      },
+      "chordText": "F6"
+    }
+  ]
+}

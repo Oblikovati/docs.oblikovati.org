@@ -1,0 +1,1636 @@
+{
+  "source": "oblikovati.org/app/cmdline Vocabulary.ManualGroups()",
+  "groups": [
+    {
+      "title": "Sketch — draw \u0026 modify",
+      "commands": [
+        {
+          "canonical": "ARC",
+          "aliases": [],
+          "summary": "Draw an arc through points or by centre.",
+          "example": "ARC 0,0 5,5 10,0",
+          "action": "Sketch.Arc"
+        },
+        {
+          "canonical": "ARRAYPOLAR",
+          "aliases": [],
+          "summary": "Pattern sketch geometry around a centre.",
+          "example": "ARRAYPOLAR (select) 0,0 6",
+          "action": "Sketch.CircularPattern"
+        },
+        {
+          "canonical": "ARRAYRECT",
+          "aliases": [],
+          "summary": "Pattern sketch geometry in rows and columns.",
+          "example": "ARRAYRECT (select) 3 2",
+          "action": "Sketch.RectangularPattern"
+        },
+        {
+          "canonical": "AUTODIMENSION",
+          "aliases": [
+            "AUTODIM"
+          ],
+          "summary": "Auto-dimension the sketch to remove its degrees of freedom.",
+          "example": "AUTODIM (select sketch)",
+          "action": "Sketch.AutoDimension"
+        },
+        {
+          "canonical": "BLOCK",
+          "aliases": [],
+          "summary": "Create a sketch block from selected geometry.",
+          "example": "BLOCK (select)",
+          "action": "Sketch.CreateBlock"
+        },
+        {
+          "canonical": "BREAK",
+          "aliases": [
+            "BR"
+          ],
+          "summary": "Split a sketch entity at a point.",
+          "example": "BREAK (entity) (point)",
+          "action": "Sketch.Split"
+        },
+        {
+          "canonical": "CENTERLINE",
+          "aliases": [],
+          "summary": "Draw a centerline (excluded from profiles; consumed by mirror/revolve).",
+          "example": "CENTERLINE 0,0 10,0",
+          "action": "Sketch.Centerline"
+        },
+        {
+          "canonical": "CHAMFER",
+          "aliases": [
+            "CHA"
+          ],
+          "summary": "Bevel a corner between two sketch entities.",
+          "example": "CHAMFER (two lines) 2",
+          "action": "Sketch.Chamfer"
+        },
+        {
+          "canonical": "CIRCLE",
+          "aliases": [],
+          "summary": "Draw a circle by centre and radius.",
+          "example": "CIRCLE 0,0 5",
+          "action": "Sketch.Circle"
+        },
+        {
+          "canonical": "CONSTRUCTION",
+          "aliases": [],
+          "summary": "Toggle selected sketch geometry to construction.",
+          "example": "CONSTRUCTION (select)",
+          "action": "Sketch.Construction"
+        },
+        {
+          "canonical": "COPY",
+          "aliases": [
+            "CO",
+            "CP"
+          ],
+          "summary": "Copy sketch geometry by a vector.",
+          "example": "COPY (select) 0,0 10,0",
+          "action": "Sketch.Copy"
+        },
+        {
+          "canonical": "DIMENSION",
+          "aliases": [
+            "DIM"
+          ],
+          "summary": "Add a parametric dimension to sketch geometry.",
+          "example": "DIM (select) 25",
+          "action": "Sketch.Dimension"
+        },
+        {
+          "canonical": "ELLIPSE",
+          "aliases": [
+            "EL"
+          ],
+          "summary": "Draw an ellipse by centre and two axes.",
+          "example": "ELLIPSE 0,0 10 5",
+          "action": "Sketch.Ellipse"
+        },
+        {
+          "canonical": "EXTEND",
+          "aliases": [
+            "EX"
+          ],
+          "summary": "Extend sketch geometry to a boundary.",
+          "example": "EXTEND (segment)",
+          "action": "Sketch.Extend"
+        },
+        {
+          "canonical": "FILLET",
+          "aliases": [],
+          "summary": "Round a corner between two sketch entities.",
+          "example": "FILLET (two lines) 2",
+          "action": "Sketch.Fillet"
+        },
+        {
+          "canonical": "FINISHSKETCH",
+          "aliases": [
+            "FINISH"
+          ],
+          "summary": "Finish the active sketch.",
+          "example": "FINISH",
+          "action": "Sketch.Finish"
+        },
+        {
+          "canonical": "GCCOINCIDENT",
+          "aliases": [],
+          "summary": "Constrain two points (or a point and a curve) coincident.",
+          "example": "GCCOINCIDENT (A) (B)",
+          "action": "Sketch.Coincident"
+        },
+        {
+          "canonical": "GCCOLLINEAR",
+          "aliases": [],
+          "summary": "Constrain two lines collinear.",
+          "example": "GCCOLLINEAR (line1) (line2)",
+          "action": "Sketch.Collinear"
+        },
+        {
+          "canonical": "GCCONCENTRIC",
+          "aliases": [],
+          "summary": "Constrain two arcs/circles concentric.",
+          "example": "GCCONCENTRIC (c1) (c2)",
+          "action": "Sketch.Concentric"
+        },
+        {
+          "canonical": "GCEQUAL",
+          "aliases": [],
+          "summary": "Constrain two entities to equal size.",
+          "example": "GCEQUAL (a) (b)",
+          "action": "Sketch.Equal"
+        },
+        {
+          "canonical": "GCFIX",
+          "aliases": [],
+          "summary": "Fix a point or curve in place.",
+          "example": "GCFIX (entity)",
+          "action": "Sketch.Fix"
+        },
+        {
+          "canonical": "GCHORIZONTAL",
+          "aliases": [],
+          "summary": "Constrain a line horizontal.",
+          "example": "GCHORIZONTAL (line)",
+          "action": "Sketch.Horizontal"
+        },
+        {
+          "canonical": "GCPARALLEL",
+          "aliases": [],
+          "summary": "Constrain two lines parallel.",
+          "example": "GCPARALLEL (line1) (line2)",
+          "action": "Sketch.Parallel"
+        },
+        {
+          "canonical": "GCPERPENDICULAR",
+          "aliases": [],
+          "summary": "Constrain two lines perpendicular.",
+          "example": "GCPERPENDICULAR (line1) (line2)",
+          "action": "Sketch.Perpendicular"
+        },
+        {
+          "canonical": "GCSMOOTH",
+          "aliases": [],
+          "summary": "Constrain a spline smooth (curvature-continuous) to a curve.",
+          "example": "GCSMOOTH (spline) (curve)",
+          "action": "Sketch.Smooth"
+        },
+        {
+          "canonical": "GCSYMMETRIC",
+          "aliases": [],
+          "summary": "Constrain two entities symmetric about a line.",
+          "example": "GCSYMMETRIC (a) (b) (line)",
+          "action": "Sketch.Symmetric"
+        },
+        {
+          "canonical": "GCTANGENT",
+          "aliases": [],
+          "summary": "Constrain a curve tangent to another.",
+          "example": "GCTANGENT (curve) (line)",
+          "action": "Sketch.Tangent"
+        },
+        {
+          "canonical": "GCVERTICAL",
+          "aliases": [],
+          "summary": "Constrain a line vertical.",
+          "example": "GCVERTICAL (line)",
+          "action": "Sketch.Vertical"
+        },
+        {
+          "canonical": "INSERT",
+          "aliases": [],
+          "summary": "Insert a sketch block instance.",
+          "example": "INSERT (block) 5,5",
+          "action": "Sketch.PlaceBlock"
+        },
+        {
+          "canonical": "LINE",
+          "aliases": [],
+          "summary": "Draw a line or connected polyline in the active sketch.",
+          "example": "LINE 0,0 10,0 10,5",
+          "action": "Sketch.Line"
+        },
+        {
+          "canonical": "MIRROR",
+          "aliases": [
+            "MI"
+          ],
+          "summary": "Mirror sketch geometry about a centerline.",
+          "example": "MIRROR (select) (line)",
+          "action": "Sketch.Mirror"
+        },
+        {
+          "canonical": "MOVE",
+          "aliases": [],
+          "summary": "Move sketch geometry by a vector.",
+          "example": "MOVE (select) 0,0 10,0",
+          "action": "Sketch.Move"
+        },
+        {
+          "canonical": "OFFSET",
+          "aliases": [],
+          "summary": "Offset selected sketch geometry by a distance.",
+          "example": "OFFSET 2 (select)",
+          "action": "Sketch.Offset"
+        },
+        {
+          "canonical": "POINT",
+          "aliases": [
+            "PO"
+          ],
+          "summary": "Place a sketch point.",
+          "example": "POINT 5,5",
+          "action": "Sketch.Point"
+        },
+        {
+          "canonical": "POLYGON",
+          "aliases": [
+            "POL"
+          ],
+          "summary": "Draw a regular polygon by edge count and radius.",
+          "example": "POLYGON 6 0,0 5",
+          "action": "Sketch.Polygon"
+        },
+        {
+          "canonical": "PROJECT",
+          "aliases": [
+            "PROJECTGEOMETRY"
+          ],
+          "summary": "Project model edges/vertices into the active sketch.",
+          "example": "PROJECT (select edges)",
+          "action": "Sketch.Project"
+        },
+        {
+          "canonical": "RECTANG",
+          "aliases": [
+            "RECTANGLE",
+            "REC"
+          ],
+          "summary": "Draw a rectangle by two opposite corners.",
+          "example": "RECTANG 0,0 10,5",
+          "action": "Sketch.Rectangle"
+        },
+        {
+          "canonical": "ROTATE",
+          "aliases": [
+            "RO"
+          ],
+          "summary": "Rotate sketch geometry about a point.",
+          "example": "ROTATE (select) 0,0 90",
+          "action": "Sketch.Rotate"
+        },
+        {
+          "canonical": "SCALE",
+          "aliases": [
+            "SC"
+          ],
+          "summary": "Scale sketch geometry about a point.",
+          "example": "SCALE (select) 0,0 2",
+          "action": "Sketch.Scale"
+        },
+        {
+          "canonical": "SKETCH2D",
+          "aliases": [
+            "NEWSKETCH"
+          ],
+          "summary": "Start a new 2D sketch on a selected plane/face.",
+          "example": "SKETCH2D (select plane)",
+          "action": "Sketch.Create2D"
+        },
+        {
+          "canonical": "SKETCH3D",
+          "aliases": [],
+          "summary": "Start a new 3D sketch.",
+          "example": "SKETCH3D",
+          "action": "Sketch.Create3D"
+        },
+        {
+          "canonical": "SLOT",
+          "aliases": [],
+          "summary": "Draw a straight slot by two centres and a width.",
+          "example": "SLOT 0,0 10,0 2",
+          "action": "Sketch.Slot"
+        },
+        {
+          "canonical": "SPLINE",
+          "aliases": [
+            "SPL"
+          ],
+          "summary": "Draw an interpolated spline through points.",
+          "example": "SPLINE 0,0 5,5 10,0",
+          "action": "Sketch.Spline"
+        },
+        {
+          "canonical": "STRETCH",
+          "aliases": [],
+          "summary": "Stretch sketch geometry by moving vertices.",
+          "example": "STRETCH (select) 0,0 5,0",
+          "action": "Sketch.Stretch"
+        },
+        {
+          "canonical": "TEXT",
+          "aliases": [
+            "MTEXT"
+          ],
+          "summary": "Place sketch text.",
+          "example": "TEXT 0,0",
+          "action": "Sketch.Text"
+        },
+        {
+          "canonical": "TRIM",
+          "aliases": [
+            "TR"
+          ],
+          "summary": "Trim sketch geometry to the nearest intersection.",
+          "example": "TRIM (segment)",
+          "action": "Sketch.Trim"
+        }
+      ]
+    },
+    {
+      "title": "Sketch — 3D",
+      "commands": [
+        {
+          "canonical": "ARC3D",
+          "aliases": [],
+          "summary": "Draw a 3D sketch arc.",
+          "example": "ARC3D 0,0,0 5,5,0 10,0,0",
+          "action": "Sketch3D.Arc"
+        },
+        {
+          "canonical": "BEND3D",
+          "aliases": [],
+          "summary": "Add a bend between two 3D sketch lines.",
+          "example": "BEND3D (line1) (line2) 5",
+          "action": "Sketch3D.Bend"
+        },
+        {
+          "canonical": "CIRCLE3D",
+          "aliases": [],
+          "summary": "Draw a 3D sketch circle.",
+          "example": "CIRCLE3D 0,0,0 5",
+          "action": "Sketch3D.Circle"
+        },
+        {
+          "canonical": "CVSPLINE3D",
+          "aliases": [],
+          "summary": "Draw a 3D control-vertex spline.",
+          "example": "CVSPLINE3D 0,0,0 5,5,5",
+          "action": "Sketch3D.ControlPointSpline"
+        },
+        {
+          "canonical": "DIMENSION3D",
+          "aliases": [],
+          "summary": "Dimension 3D sketch geometry.",
+          "example": "DIMENSION3D (select) 25",
+          "action": "Sketch3D.Dimension"
+        },
+        {
+          "canonical": "EQUATIONCURVE",
+          "aliases": [],
+          "summary": "Draw a curve from parametric equations.",
+          "example": "EQUATIONCURVE",
+          "action": "Sketch3D.EquationCurve"
+        },
+        {
+          "canonical": "FINISH3D",
+          "aliases": [],
+          "summary": "Finish the active 3D sketch.",
+          "example": "FINISH3D",
+          "action": "Sketch3D.Finish"
+        },
+        {
+          "canonical": "HELICAL3D",
+          "aliases": [],
+          "summary": "Draw a 3D helical curve by revolution and pitch.",
+          "example": "HELICAL3D (axis) 2 20",
+          "action": "Sketch3D.Helical"
+        },
+        {
+          "canonical": "HELIX3D",
+          "aliases": [],
+          "summary": "Draw a 3D helical curve.",
+          "example": "HELIX3D (axis) 10 5",
+          "action": "Sketch3D.Helix"
+        },
+        {
+          "canonical": "INCLUDE3D",
+          "aliases": [],
+          "summary": "Include model geometry in the 3D sketch.",
+          "example": "INCLUDE3D (edges)",
+          "action": "Sketch3D.Include"
+        },
+        {
+          "canonical": "LINE3D",
+          "aliases": [],
+          "summary": "Draw a 3D sketch line or polyline.",
+          "example": "LINE3D 0,0,0 10,0,5",
+          "action": "Sketch3D.Line"
+        },
+        {
+          "canonical": "POINT3D",
+          "aliases": [],
+          "summary": "Place a 3D sketch point.",
+          "example": "POINT3D 5,5,5",
+          "action": "Sketch3D.Point"
+        },
+        {
+          "canonical": "SMOOTH3D",
+          "aliases": [],
+          "summary": "Apply a 3D smooth condition.",
+          "example": "SMOOTH3D (spline) (curve)",
+          "action": "Sketch3D.Smooth"
+        },
+        {
+          "canonical": "SPLINE3D",
+          "aliases": [],
+          "summary": "Draw a 3D interpolated spline.",
+          "example": "SPLINE3D 0,0,0 5,5,5",
+          "action": "Sketch3D.Spline"
+        },
+        {
+          "canonical": "SPLINEFIT3D",
+          "aliases": [],
+          "summary": "Draw a 3D fit-point spline.",
+          "example": "SPLINEFIT3D 0,0,0 5,5,5",
+          "action": "Sketch3D.SplineFit"
+        },
+        {
+          "canonical": "SURFACECURVE",
+          "aliases": [],
+          "summary": "Draw a curve lying on a surface.",
+          "example": "SURFACECURVE (surface)",
+          "action": "Sketch3D.SurfaceCurve"
+        },
+        {
+          "canonical": "TANGENT3D",
+          "aliases": [],
+          "summary": "Apply a 3D tangent condition.",
+          "example": "TANGENT3D (curve) (curve)",
+          "action": "Sketch3D.Tangent"
+        }
+      ]
+    },
+    {
+      "title": "Part — create",
+      "commands": [
+        {
+          "canonical": "DECAL",
+          "aliases": [],
+          "summary": "Apply a decal image to a face.",
+          "example": "DECAL (face) (image)",
+          "action": "Create.Decal"
+        },
+        {
+          "canonical": "EMBOSS",
+          "aliases": [],
+          "summary": "Emboss or engrave sketch geometry onto a face.",
+          "example": "EMBOSS (profile) 1",
+          "action": "Create.Emboss"
+        },
+        {
+          "canonical": "EXTRUDE",
+          "aliases": [
+            "EXT"
+          ],
+          "summary": "Extrude a profile into a solid.",
+          "example": "EXTRUDE (profile) 10",
+          "action": "Create.Extrude"
+        },
+        {
+          "canonical": "GRILL",
+          "aliases": [],
+          "summary": "Create a grill feature in a plastic part.",
+          "example": "GRILL (boundary)",
+          "action": "Create.Grill"
+        },
+        {
+          "canonical": "HELIX",
+          "aliases": [
+            "COIL"
+          ],
+          "summary": "Create a helical coil from a profile.",
+          "example": "HELIX (profile) (axis)",
+          "action": "Create.Coil"
+        },
+        {
+          "canonical": "LOFT",
+          "aliases": [],
+          "summary": "Loft between two or more profiles.",
+          "example": "LOFT (profile1) (profile2)",
+          "action": "Create.Loft"
+        },
+        {
+          "canonical": "REVOLVE",
+          "aliases": [
+            "REV"
+          ],
+          "summary": "Revolve a profile about an axis.",
+          "example": "REVOLVE (profile) (axis) 360",
+          "action": "Create.Revolve"
+        },
+        {
+          "canonical": "RIB",
+          "aliases": [],
+          "summary": "Create a rib/web from an open profile.",
+          "example": "RIB (profile) 2",
+          "action": "Create.Rib"
+        },
+        {
+          "canonical": "SWEEP",
+          "aliases": [
+            "SW"
+          ],
+          "summary": "Sweep a profile along a path.",
+          "example": "SWEEP (profile) (path)",
+          "action": "Create.Sweep"
+        }
+      ]
+    },
+    {
+      "title": "Part — modify",
+      "commands": [
+        {
+          "canonical": "BOSS",
+          "aliases": [],
+          "summary": "Create a plastic boss feature.",
+          "example": "BOSS (point)",
+          "action": "Modify.Boss"
+        },
+        {
+          "canonical": "CHAMFEREDGE",
+          "aliases": [],
+          "summary": "Bevel one or more solid edges.",
+          "example": "CHAMFEREDGE (edges) 2",
+          "action": "Modify.Chamfer"
+        },
+        {
+          "canonical": "CIRCLEPATTERN",
+          "aliases": [],
+          "summary": "Pattern features/bodies around an axis.",
+          "example": "CIRCLEPATTERN (feature) (axis) 6",
+          "action": "Modify.CircularPattern"
+        },
+        {
+          "canonical": "COMBINE",
+          "aliases": [
+            "UNION",
+            "SUBTRACT",
+            "INTERSECT"
+          ],
+          "summary": "Boolean-combine bodies (union, cut or intersect).",
+          "example": "UNION (body1) (body2)",
+          "action": "Modify.Combine"
+        },
+        {
+          "canonical": "DELETEFACE",
+          "aliases": [],
+          "summary": "Delete a face from a solid.",
+          "example": "DELETEFACE (face)",
+          "action": "Modify.DeleteFace"
+        },
+        {
+          "canonical": "DIRECTEDIT",
+          "aliases": [
+            "PRESSPULL"
+          ],
+          "summary": "Directly push/pull or edit solid geometry.",
+          "example": "PRESSPULL (face) 5",
+          "action": "Modify.DirectEdit"
+        },
+        {
+          "canonical": "DRAFT",
+          "aliases": [
+            "TAPER"
+          ],
+          "summary": "Apply a draft angle to faces.",
+          "example": "DRAFT (faces) (pull) 3",
+          "action": "Modify.Draft"
+        },
+        {
+          "canonical": "FILLETEDGE",
+          "aliases": [],
+          "summary": "Round one or more solid edges.",
+          "example": "FILLETEDGE (edges) 2",
+          "action": "Modify.Fillet"
+        },
+        {
+          "canonical": "HOLE",
+          "aliases": [],
+          "summary": "Place a hole feature.",
+          "example": "HOLE (point) 6",
+          "action": "Modify.Hole"
+        },
+        {
+          "canonical": "HULL",
+          "aliases": [],
+          "summary": "Create the convex hull of selected bodies.",
+          "example": "HULL (body1) (body2)",
+          "action": "Modify.Hull"
+        },
+        {
+          "canonical": "MIRRORBODY",
+          "aliases": [],
+          "summary": "Mirror a solid body about a plane.",
+          "example": "MIRRORBODY (body) (plane)",
+          "action": "Modify.Mirror"
+        },
+        {
+          "canonical": "MOVEBODY",
+          "aliases": [
+            "3DMOVE"
+          ],
+          "summary": "Move solid bodies by a vector.",
+          "example": "3DMOVE (body) 0,0,0 0,0,10",
+          "action": "Modify.MoveBodies"
+        },
+        {
+          "canonical": "MOVEFACE",
+          "aliases": [],
+          "summary": "Move a solid face.",
+          "example": "MOVEFACE (face) 0,0 0,2",
+          "action": "Modify.MoveFace"
+        },
+        {
+          "canonical": "OFFSETFACE",
+          "aliases": [],
+          "summary": "Offset a solid face.",
+          "example": "OFFSETFACE (face) 2",
+          "action": "Modify.FaceOffset"
+        },
+        {
+          "canonical": "RECTPATTERN",
+          "aliases": [],
+          "summary": "Pattern features/bodies in rows and columns.",
+          "example": "RECTPATTERN (feature) 3 2",
+          "action": "Modify.RectangularPattern"
+        },
+        {
+          "canonical": "REPLACEFACE",
+          "aliases": [],
+          "summary": "Replace a solid face with a surface.",
+          "example": "REPLACEFACE (face) (surface)",
+          "action": "Modify.ReplaceFace"
+        },
+        {
+          "canonical": "SHELL",
+          "aliases": [],
+          "summary": "Hollow a solid to a wall thickness.",
+          "example": "SHELL (faces) 2",
+          "action": "Modify.Shell"
+        },
+        {
+          "canonical": "SKETCHPATTERN",
+          "aliases": [],
+          "summary": "Pattern features at sketch points.",
+          "example": "SKETCHPATTERN (feature) (sketch)",
+          "action": "Modify.SketchDrivenPattern"
+        },
+        {
+          "canonical": "SLICE",
+          "aliases": [
+            "SPLITBODY"
+          ],
+          "summary": "Split a body with a plane or surface.",
+          "example": "SLICE (body) (plane)",
+          "action": "Modify.Split"
+        },
+        {
+          "canonical": "THICKEN",
+          "aliases": [],
+          "summary": "Thicken a surface into a solid.",
+          "example": "THICKEN (surface) 2",
+          "action": "Modify.Thicken"
+        },
+        {
+          "canonical": "THREAD",
+          "aliases": [],
+          "summary": "Apply a thread to a cylindrical face.",
+          "example": "THREAD (face) M6",
+          "action": "Modify.Thread"
+        }
+      ]
+    },
+    {
+      "title": "Surfaces",
+      "commands": [
+        {
+          "canonical": "MIDSURFACE",
+          "aliases": [],
+          "summary": "Create a midsurface between face pairs.",
+          "example": "MIDSURFACE (faces)",
+          "action": "Surface.MidSurface"
+        },
+        {
+          "canonical": "RULESURF",
+          "aliases": [
+            "RULED"
+          ],
+          "summary": "Create a ruled surface between two curves.",
+          "example": "RULESURF (curve1) (curve2)",
+          "action": "Surface.Ruled"
+        },
+        {
+          "canonical": "SCULPT",
+          "aliases": [],
+          "summary": "Sculpt a solid from bounding surfaces.",
+          "example": "SCULPT (surfaces)",
+          "action": "Surface.Sculpt"
+        },
+        {
+          "canonical": "SURFEXTEND",
+          "aliases": [],
+          "summary": "Extend a surface edge.",
+          "example": "SURFEXTEND (edge) 5",
+          "action": "Surface.Extend"
+        },
+        {
+          "canonical": "SURFOFFSET",
+          "aliases": [],
+          "summary": "Offset a surface by a distance.",
+          "example": "SURFOFFSET (surface) 2",
+          "action": "Surface.Offset"
+        },
+        {
+          "canonical": "SURFPATCH",
+          "aliases": [
+            "PATCH"
+          ],
+          "summary": "Create a surface patch from boundary edges.",
+          "example": "SURFPATCH (edges)",
+          "action": "Surface.Patch"
+        },
+        {
+          "canonical": "SURFSTITCH",
+          "aliases": [
+            "STITCH"
+          ],
+          "summary": "Stitch surfaces into a quilt or solid.",
+          "example": "SURFSTITCH (surfaces)",
+          "action": "Surface.Stitch"
+        },
+        {
+          "canonical": "SURFTRIM",
+          "aliases": [],
+          "summary": "Trim a surface with a cutting object.",
+          "example": "SURFTRIM (surface) (curve)",
+          "action": "Surface.Trim"
+        }
+      ]
+    },
+    {
+      "title": "Work planes",
+      "commands": [
+        {
+          "canonical": "MIDPLANE",
+          "aliases": [],
+          "summary": "Create a work plane midway between two faces.",
+          "example": "MIDPLANE (face1) (face2)",
+          "action": "WorkPlane.Midplane"
+        },
+        {
+          "canonical": "NORMALPLANE",
+          "aliases": [],
+          "summary": "Create a work plane normal to an axis at a point.",
+          "example": "NORMALPLANE (axis) (point)",
+          "action": "WorkPlane.NormalToAxis"
+        },
+        {
+          "canonical": "PLANE3P",
+          "aliases": [],
+          "summary": "Create a work plane through three points.",
+          "example": "PLANE3P (p1) (p2) (p3)",
+          "action": "WorkPlane.ThreePoints"
+        },
+        {
+          "canonical": "TANPLANE",
+          "aliases": [],
+          "summary": "Create a work plane tangent to a face.",
+          "example": "TANPLANE (face) (plane)",
+          "action": "WorkPlane.Tangent"
+        },
+        {
+          "canonical": "WORKPLANE",
+          "aliases": [
+            "PLANE"
+          ],
+          "summary": "Create a work plane offset from a face/plane.",
+          "example": "WORKPLANE (face) 10",
+          "action": "WorkPlane.Offset"
+        }
+      ]
+    },
+    {
+      "title": "Mold, freeform \u0026 mesh",
+      "commands": [
+        {
+          "canonical": "CORECAVITY",
+          "aliases": [],
+          "summary": "Generate core and cavity from a part.",
+          "example": "CORECAVITY (part)",
+          "action": "Mold.CoreCavity"
+        },
+        {
+          "canonical": "FREEFORMBOX",
+          "aliases": [],
+          "summary": "Create a freeform (T-spline) box.",
+          "example": "FREEFORMBOX 0,0,0 10,10,10",
+          "action": "Freeform.Box"
+        },
+        {
+          "canonical": "FREEFORMPLANE",
+          "aliases": [],
+          "summary": "Create a freeform (T-spline) plane.",
+          "example": "FREEFORMPLANE (plane) 10 10",
+          "action": "Freeform.Plane"
+        },
+        {
+          "canonical": "MESHPLACE",
+          "aliases": [
+            "IMPORTMESH"
+          ],
+          "summary": "Import or place a mesh body.",
+          "example": "MESHPLACE (file)",
+          "action": "Mesh.Place"
+        },
+        {
+          "canonical": "QUADBALL",
+          "aliases": [],
+          "summary": "Create a freeform (T-spline) quadball.",
+          "example": "QUADBALL 0,0,0 5",
+          "action": "Freeform.QuadBall"
+        }
+      ]
+    },
+    {
+      "title": "Sheet metal",
+      "commands": [
+        {
+          "canonical": "CONTOURFLANGE",
+          "aliases": [],
+          "summary": "Create a contour flange from an open profile.",
+          "example": "CONTOURFLANGE (profile) (edge)",
+          "action": "SheetMetal.ContourFlange"
+        },
+        {
+          "canonical": "CONTOURROLL",
+          "aliases": [],
+          "summary": "Roll a contour into a sheet-metal part.",
+          "example": "CONTOURROLL (profile) (axis)",
+          "action": "SheetMetal.ContourRoll"
+        },
+        {
+          "canonical": "CORNER",
+          "aliases": [],
+          "summary": "Apply a corner round or chamfer.",
+          "example": "CORNER (corner) 2",
+          "action": "SheetMetal.Corner"
+        },
+        {
+          "canonical": "CORNERSEAM",
+          "aliases": [],
+          "summary": "Create a corner seam between two flanges.",
+          "example": "CORNERSEAM (edge1) (edge2)",
+          "action": "SheetMetal.CornerSeam"
+        },
+        {
+          "canonical": "COSMETICBEND",
+          "aliases": [],
+          "summary": "Add a cosmetic bend line.",
+          "example": "COSMETICBEND (line)",
+          "action": "SheetMetal.CosmeticBend"
+        },
+        {
+          "canonical": "FLANGE",
+          "aliases": [],
+          "summary": "Add a flange to an edge.",
+          "example": "FLANGE (edge) 20",
+          "action": "SheetMetal.Flange"
+        },
+        {
+          "canonical": "FLATPATTERN",
+          "aliases": [],
+          "summary": "Create the flat pattern.",
+          "example": "FLATPATTERN",
+          "action": "SheetMetal.CreateFlatPattern"
+        },
+        {
+          "canonical": "FOLD",
+          "aliases": [],
+          "summary": "Fold a face along a sketched line.",
+          "example": "FOLD (line)",
+          "action": "SheetMetal.Fold"
+        },
+        {
+          "canonical": "HEM",
+          "aliases": [],
+          "summary": "Add a hem to an edge.",
+          "example": "HEM (edge)",
+          "action": "SheetMetal.Hem"
+        },
+        {
+          "canonical": "LIP",
+          "aliases": [],
+          "summary": "Add a lip to an edge.",
+          "example": "LIP (edge)",
+          "action": "SheetMetal.Lip"
+        },
+        {
+          "canonical": "LOFTEDFLANGE",
+          "aliases": [],
+          "summary": "Create a lofted flange between two profiles.",
+          "example": "LOFTEDFLANGE (profile1) (profile2)",
+          "action": "SheetMetal.LoftedFlange"
+        },
+        {
+          "canonical": "PUNCH",
+          "aliases": [],
+          "summary": "Apply a punch tool (iFeature).",
+          "example": "PUNCH (point)",
+          "action": "SheetMetal.Punch"
+        },
+        {
+          "canonical": "REFOLD",
+          "aliases": [],
+          "summary": "Refold a flattened model.",
+          "example": "REFOLD",
+          "action": "SheetMetal.Refold"
+        },
+        {
+          "canonical": "RIP",
+          "aliases": [],
+          "summary": "Rip an edge to open a corner.",
+          "example": "RIP (edge)",
+          "action": "SheetMetal.Rip"
+        },
+        {
+          "canonical": "SMBEND",
+          "aliases": [],
+          "summary": "Add a bend between two faces.",
+          "example": "SMBEND (edge)",
+          "action": "SheetMetal.Bend"
+        },
+        {
+          "canonical": "SMCONVERT",
+          "aliases": [],
+          "summary": "Convert a solid to sheet metal.",
+          "example": "SMCONVERT (face) 1",
+          "action": "SheetMetal.Convert"
+        },
+        {
+          "canonical": "SMCUT",
+          "aliases": [],
+          "summary": "Cut through sheet-metal faces.",
+          "example": "SMCUT (profile)",
+          "action": "SheetMetal.Cut"
+        },
+        {
+          "canonical": "SMFACE",
+          "aliases": [],
+          "summary": "Create the base face of a sheet-metal part.",
+          "example": "SMFACE (profile)",
+          "action": "SheetMetal.Face"
+        },
+        {
+          "canonical": "SMSTYLE",
+          "aliases": [],
+          "summary": "Edit sheet-metal styles and rules.",
+          "example": "SMSTYLE",
+          "action": "SheetMetal.Style"
+        }
+      ]
+    },
+    {
+      "title": "Assembly",
+      "commands": [
+        {
+          "canonical": "ASMANGLE",
+          "aliases": [],
+          "summary": "Apply an angle constraint between two components.",
+          "example": "ASMANGLE (face1) (face2) 45",
+          "action": "Assembly.Angle"
+        },
+        {
+          "canonical": "ASMCHAMFER",
+          "aliases": [],
+          "summary": "Bevel edges in the assembly context.",
+          "example": "ASMCHAMFER (edges) 2",
+          "action": "Assembly.Chamfer"
+        },
+        {
+          "canonical": "ASMCIRCLEPATTERN",
+          "aliases": [],
+          "summary": "Pattern components around an axis.",
+          "example": "ASMCIRCLEPATTERN (component) (axis) 6",
+          "action": "Assembly.CircularPattern"
+        },
+        {
+          "canonical": "ASMCOPY",
+          "aliases": [],
+          "summary": "Copy an assembly component.",
+          "example": "ASMCOPY (component)",
+          "action": "Assembly.Copy"
+        },
+        {
+          "canonical": "ASMCUSTOM",
+          "aliases": [],
+          "summary": "Apply a custom assembly constraint.",
+          "example": "ASMCUSTOM (face1) (face2)",
+          "action": "Assembly.Custom"
+        },
+        {
+          "canonical": "ASMEXTRUDE",
+          "aliases": [],
+          "summary": "Extrude in the assembly context.",
+          "example": "ASMEXTRUDE (profile) 10",
+          "action": "Assembly.Extrude"
+        },
+        {
+          "canonical": "ASMFILLET",
+          "aliases": [],
+          "summary": "Round edges in the assembly context.",
+          "example": "ASMFILLET (edges) 2",
+          "action": "Assembly.Fillet"
+        },
+        {
+          "canonical": "ASMHOLE",
+          "aliases": [],
+          "summary": "Place an assembly-context hole.",
+          "example": "ASMHOLE (point) 6",
+          "action": "Assembly.Hole"
+        },
+        {
+          "canonical": "ASMINSERT",
+          "aliases": [],
+          "summary": "Apply an insert constraint (aligns axis and plane).",
+          "example": "ASMINSERT (edge1) (edge2)",
+          "action": "Assembly.Insert"
+        },
+        {
+          "canonical": "ASMMIRROR",
+          "aliases": [],
+          "summary": "Mirror assembly components about a plane.",
+          "example": "ASMMIRROR (component) (plane)",
+          "action": "Assembly.Mirror"
+        },
+        {
+          "canonical": "ASMRECTPATTERN",
+          "aliases": [],
+          "summary": "Pattern components in rows and columns.",
+          "example": "ASMRECTPATTERN (component) 3 2",
+          "action": "Assembly.RectangularPattern"
+        },
+        {
+          "canonical": "ASMREVOLVE",
+          "aliases": [],
+          "summary": "Revolve in the assembly context.",
+          "example": "ASMREVOLVE (profile) (axis) 360",
+          "action": "Assembly.Revolve"
+        },
+        {
+          "canonical": "ASMROTATEROTATE",
+          "aliases": [],
+          "summary": "Apply a rotation-rotation motion constraint.",
+          "example": "ASMROTATEROTATE (face1) (face2)",
+          "action": "Assembly.RotateRotate"
+        },
+        {
+          "canonical": "ASMROTATETRANSLATE",
+          "aliases": [],
+          "summary": "Apply a rotation-translation motion constraint.",
+          "example": "ASMROTATETRANSLATE (face1) (face2)",
+          "action": "Assembly.RotateTranslate"
+        },
+        {
+          "canonical": "ASMSKETCH",
+          "aliases": [],
+          "summary": "Create a sketch in the assembly context.",
+          "example": "ASMSKETCH (plane)",
+          "action": "Assembly.CreateSketch"
+        },
+        {
+          "canonical": "ASMSYMMETRY",
+          "aliases": [],
+          "summary": "Apply a symmetry constraint about a plane.",
+          "example": "ASMSYMMETRY (c1) (c2) (plane)",
+          "action": "Assembly.Symmetry"
+        },
+        {
+          "canonical": "ASMTANGENT",
+          "aliases": [],
+          "summary": "Apply a tangent constraint between two components.",
+          "example": "ASMTANGENT (face) (cyl)",
+          "action": "Assembly.Tangent"
+        },
+        {
+          "canonical": "ASMTRANSITIONAL",
+          "aliases": [],
+          "summary": "Apply a transitional (cam) constraint.",
+          "example": "ASMTRANSITIONAL (face) (face)",
+          "action": "Assembly.Transitional"
+        },
+        {
+          "canonical": "ASMTRANSLATETRANSLATE",
+          "aliases": [],
+          "summary": "Apply a translation-translation motion constraint.",
+          "example": "ASMTRANSLATETRANSLATE (face1) (face2)",
+          "action": "Assembly.TranslateTranslate"
+        },
+        {
+          "canonical": "BOM",
+          "aliases": [],
+          "summary": "Open the Bill of Materials.",
+          "example": "BOM",
+          "action": "Assembly.BOM"
+        },
+        {
+          "canonical": "CAPTURELOD",
+          "aliases": [],
+          "summary": "Capture a level-of-detail representation.",
+          "example": "CAPTURELOD",
+          "action": "Assembly.CaptureLOD"
+        },
+        {
+          "canonical": "CAPTUREPOSITION",
+          "aliases": [],
+          "summary": "Capture a positional representation.",
+          "example": "CAPTUREPOSITION",
+          "action": "Assembly.CapturePosition"
+        },
+        {
+          "canonical": "CAPTUREVIEW",
+          "aliases": [],
+          "summary": "Capture a view representation.",
+          "example": "CAPTUREVIEW",
+          "action": "Assembly.CaptureView"
+        },
+        {
+          "canonical": "CONTACTSET",
+          "aliases": [],
+          "summary": "Add components to the contact set.",
+          "example": "CONTACTSET (components)",
+          "action": "Assembly.ContactSet"
+        },
+        {
+          "canonical": "CONTACTSOLVER",
+          "aliases": [],
+          "summary": "Toggle the contact solver on/off.",
+          "example": "CONTACTSOLVER",
+          "action": "Assembly.ContactEnable"
+        },
+        {
+          "canonical": "DRIVE",
+          "aliases": [],
+          "summary": "Drive a constraint through a range to animate motion.",
+          "example": "DRIVE (constraint) 0 90",
+          "action": "Assembly.Drive"
+        },
+        {
+          "canonical": "FLUSH",
+          "aliases": [],
+          "summary": "Apply a flush constraint between two faces.",
+          "example": "FLUSH (face1) (face2)",
+          "action": "Assembly.Flush"
+        },
+        {
+          "canonical": "GRIPSNAP",
+          "aliases": [],
+          "summary": "Move a component interactively with grip snap.",
+          "example": "GRIPSNAP (component)",
+          "action": "Assembly.GripSnap"
+        },
+        {
+          "canonical": "INTERFERE",
+          "aliases": [],
+          "summary": "Analyse interference between component sets.",
+          "example": "INTERFERE (set1) (set2)",
+          "action": "Assembly.Interference"
+        },
+        {
+          "canonical": "JOINTBALL",
+          "aliases": [],
+          "summary": "Create a ball joint.",
+          "example": "JOINTBALL (origin1) (origin2)",
+          "action": "Assembly.JointBall"
+        },
+        {
+          "canonical": "JOINTCYLINDRICAL",
+          "aliases": [],
+          "summary": "Create a cylindrical joint.",
+          "example": "JOINTCYLINDRICAL (origin1) (origin2)",
+          "action": "Assembly.JointCylindrical"
+        },
+        {
+          "canonical": "JOINTPLANAR",
+          "aliases": [],
+          "summary": "Create a planar joint.",
+          "example": "JOINTPLANAR (origin1) (origin2)",
+          "action": "Assembly.JointPlanar"
+        },
+        {
+          "canonical": "JOINTRIGID",
+          "aliases": [],
+          "summary": "Create a rigid joint between components.",
+          "example": "JOINTRIGID (origin1) (origin2)",
+          "action": "Assembly.JointRigid"
+        },
+        {
+          "canonical": "JOINTROTATIONAL",
+          "aliases": [],
+          "summary": "Create a rotational joint.",
+          "example": "JOINTROTATIONAL (origin1) (origin2)",
+          "action": "Assembly.JointRotational"
+        },
+        {
+          "canonical": "JOINTSLIDER",
+          "aliases": [],
+          "summary": "Create a slider joint.",
+          "example": "JOINTSLIDER (origin1) (origin2)",
+          "action": "Assembly.JointSlider"
+        },
+        {
+          "canonical": "MATE",
+          "aliases": [],
+          "summary": "Apply a mate constraint between two components.",
+          "example": "MATE (face1) (face2)",
+          "action": "Assembly.Mate"
+        },
+        {
+          "canonical": "MODELSTATE",
+          "aliases": [],
+          "summary": "Create a new model state.",
+          "example": "MODELSTATE",
+          "action": "Assembly.NewModelState"
+        },
+        {
+          "canonical": "PLACE",
+          "aliases": [],
+          "summary": "Place an existing component into the assembly.",
+          "example": "PLACE (file) 0,0,0",
+          "action": "Assembly.Place"
+        }
+      ]
+    },
+    {
+      "title": "Drawing",
+      "commands": [
+        {
+          "canonical": "DELETESHEET",
+          "aliases": [],
+          "summary": "Delete the active drawing sheet.",
+          "example": "DELETESHEET",
+          "action": "Drawing.DeleteSheet"
+        },
+        {
+          "canonical": "DRAFTINGSTANDARD",
+          "aliases": [],
+          "summary": "Set the drafting standard.",
+          "example": "DRAFTINGSTANDARD",
+          "action": "Drawing.DraftingStandard"
+        },
+        {
+          "canonical": "DXFOUT",
+          "aliases": [
+            "EXPORT"
+          ],
+          "summary": "Export the drawing/flat-pattern to DXF.",
+          "example": "DXFOUT",
+          "action": "Drawing.ExportDXF"
+        },
+        {
+          "canonical": "MODELREFERENCE",
+          "aliases": [],
+          "summary": "Set the referenced model.",
+          "example": "MODELREFERENCE (file)",
+          "action": "Drawing.ModelReference"
+        },
+        {
+          "canonical": "NEWSHEET",
+          "aliases": [
+            "LAYOUT"
+          ],
+          "summary": "Add a new drawing sheet.",
+          "example": "NEWSHEET",
+          "action": "Drawing.NewSheet"
+        },
+        {
+          "canonical": "VIEWAUX",
+          "aliases": [],
+          "summary": "Create an auxiliary view from an edge.",
+          "example": "VIEWAUX (parent) (edge)",
+          "action": "Drawing.AuxiliaryView"
+        },
+        {
+          "canonical": "VIEWBASE",
+          "aliases": [],
+          "summary": "Place a base view from a 3D model.",
+          "example": "VIEWBASE (model) (point)",
+          "action": "Drawing.BaseView"
+        },
+        {
+          "canonical": "VIEWBREAK",
+          "aliases": [],
+          "summary": "Add a break to a view.",
+          "example": "VIEWBREAK (view) (p1) (p2)",
+          "action": "Drawing.BreakView"
+        },
+        {
+          "canonical": "VIEWDETAIL",
+          "aliases": [],
+          "summary": "Create a detail view.",
+          "example": "VIEWDETAIL (parent) (centre) (radius)",
+          "action": "Drawing.DetailView"
+        },
+        {
+          "canonical": "VIEWPROJ",
+          "aliases": [],
+          "summary": "Place a projected view from a parent view.",
+          "example": "VIEWPROJ (parent) (point)",
+          "action": "Drawing.ProjectedView"
+        },
+        {
+          "canonical": "VIEWSECTION",
+          "aliases": [],
+          "summary": "Create a section view.",
+          "example": "VIEWSECTION (parent) (line)",
+          "action": "Drawing.SectionView"
+        }
+      ]
+    },
+    {
+      "title": "Manage",
+      "commands": [
+        {
+          "canonical": "DERIVE",
+          "aliases": [],
+          "summary": "Derive geometry from another part or assembly.",
+          "example": "DERIVE (file)",
+          "action": "Manage.Derive"
+        },
+        {
+          "canonical": "PARAMETERS",
+          "aliases": [],
+          "summary": "Open the Parameters manager.",
+          "example": "PARAMETERS",
+          "action": "Manage.Parameters"
+        },
+        {
+          "canonical": "SCRIPT",
+          "aliases": [
+            "RUNSCRIPT"
+          ],
+          "summary": "Open the script console / run a script.",
+          "example": "SCRIPT",
+          "action": "Manage.ScriptConsole"
+        },
+        {
+          "canonical": "SHRINKWRAP",
+          "aliases": [],
+          "summary": "Create a shrinkwrap substitute.",
+          "example": "SHRINKWRAP",
+          "action": "Manage.Shrinkwrap"
+        }
+      ]
+    },
+    {
+      "title": "View \u0026 visual styles",
+      "commands": [
+        {
+          "canonical": "BACK",
+          "aliases": [],
+          "summary": "Orient to the back view.",
+          "example": "BACK",
+          "action": "View.Orient.Back"
+        },
+        {
+          "canonical": "BOTTOMVIEW",
+          "aliases": [],
+          "summary": "Orient to the bottom view.",
+          "example": "BOTTOMVIEW",
+          "action": "View.Orient.Bottom"
+        },
+        {
+          "canonical": "CLOSE",
+          "aliases": [],
+          "summary": "Close the active document.",
+          "example": "CLOSE",
+          "action": "View.Close"
+        },
+        {
+          "canonical": "FRONT",
+          "aliases": [],
+          "summary": "Orient to the front view.",
+          "example": "FRONT",
+          "action": "View.Orient.Front"
+        },
+        {
+          "canonical": "HOME",
+          "aliases": [
+            "HOMEVIEW"
+          ],
+          "summary": "Go to the home (isometric) view.",
+          "example": "HOME",
+          "action": "View.Home"
+        },
+        {
+          "canonical": "ILLUSTRATION",
+          "aliases": [],
+          "summary": "Set the illustration visual style.",
+          "example": "ILLUSTRATION",
+          "action": "View.Illustration"
+        },
+        {
+          "canonical": "ISO",
+          "aliases": [],
+          "summary": "Orient to the isometric view.",
+          "example": "ISO",
+          "action": "View.Orient.Iso"
+        },
+        {
+          "canonical": "LEFTVIEW",
+          "aliases": [],
+          "summary": "Orient to the left view.",
+          "example": "LEFTVIEW",
+          "action": "View.Orient.Left"
+        },
+        {
+          "canonical": "MONOCHROME",
+          "aliases": [],
+          "summary": "Set the monochrome visual style.",
+          "example": "MONOCHROME",
+          "action": "View.Monochrome"
+        },
+        {
+          "canonical": "NAMEDVIEWS",
+          "aliases": [
+            "VIEWMGR"
+          ],
+          "summary": "Open the named-views manager.",
+          "example": "NAMEDVIEWS",
+          "action": "View.NamedViews"
+        },
+        {
+          "canonical": "REALISTIC",
+          "aliases": [],
+          "summary": "Set the realistic visual style.",
+          "example": "REALISTIC",
+          "action": "View.Realistic"
+        },
+        {
+          "canonical": "RIGHTVIEW",
+          "aliases": [],
+          "summary": "Orient to the right view.",
+          "example": "RIGHTVIEW",
+          "action": "View.Orient.Right"
+        },
+        {
+          "canonical": "SHADED",
+          "aliases": [],
+          "summary": "Set the shaded visual style.",
+          "example": "SHADED",
+          "action": "View.Shaded"
+        },
+        {
+          "canonical": "SHADEDEDGES",
+          "aliases": [],
+          "summary": "Set the shaded-with-edges visual style.",
+          "example": "SHADEDEDGES",
+          "action": "View.ShadedWithEdges"
+        },
+        {
+          "canonical": "TECHNICAL",
+          "aliases": [],
+          "summary": "Set the technical-illustration visual style.",
+          "example": "TECHNICAL",
+          "action": "View.TechnicalIllustration"
+        },
+        {
+          "canonical": "TOPVIEW",
+          "aliases": [],
+          "summary": "Orient to the top view.",
+          "example": "TOPVIEW",
+          "action": "View.Orient.Top"
+        },
+        {
+          "canonical": "VIEWCUBE",
+          "aliases": [],
+          "summary": "Toggle the ViewCube.",
+          "example": "VIEWCUBE",
+          "action": "View.ViewCube"
+        },
+        {
+          "canonical": "WATERCOLOR",
+          "aliases": [],
+          "summary": "Set the watercolour visual style.",
+          "example": "WATERCOLOR",
+          "action": "View.Watercolor"
+        },
+        {
+          "canonical": "WIREFRAME",
+          "aliases": [],
+          "summary": "Set the wireframe visual style.",
+          "example": "WIREFRAME",
+          "action": "View.Wireframe"
+        },
+        {
+          "canonical": "ZOOM",
+          "aliases": [
+            "ZOOMALL",
+            "ZE"
+          ],
+          "summary": "Zoom to fit all geometry.",
+          "example": "ZOOM",
+          "action": "View.ZoomAll"
+        }
+      ]
+    },
+    {
+      "title": "Application \u0026 files",
+      "commands": [
+        {
+          "canonical": "CANCEL",
+          "aliases": [],
+          "summary": "Cancel the active command.",
+          "example": "CANCEL",
+          "action": "tool.cancel"
+        },
+        {
+          "canonical": "NEW",
+          "aliases": [
+            "NEWPART"
+          ],
+          "summary": "Create a new part document.",
+          "example": "NEW",
+          "action": "GetStarted.NewPart"
+        },
+        {
+          "canonical": "NEWASSEMBLY",
+          "aliases": [],
+          "summary": "Create a new assembly document.",
+          "example": "NEWASSEMBLY",
+          "action": "GetStarted.NewAssembly"
+        },
+        {
+          "canonical": "NEWDRAWING",
+          "aliases": [],
+          "summary": "Create a new drawing document.",
+          "example": "NEWDRAWING",
+          "action": "GetStarted.NewDrawing"
+        },
+        {
+          "canonical": "NEWSHEETMETAL",
+          "aliases": [],
+          "summary": "Create a new sheet-metal part document.",
+          "example": "NEWSHEETMETAL",
+          "action": "GetStarted.NewSheetMetalPart"
+        },
+        {
+          "canonical": "REDO",
+          "aliases": [
+            "MREDO"
+          ],
+          "summary": "Redo the last undone operation.",
+          "example": "REDO",
+          "action": "edit.redo"
+        },
+        {
+          "canonical": "SAVE",
+          "aliases": [
+            "QSAVE"
+          ],
+          "summary": "Save the active document.",
+          "example": "SAVE",
+          "action": "file.save"
+        },
+        {
+          "canonical": "UNDO",
+          "aliases": [],
+          "summary": "Undo the last operation.",
+          "example": "UNDO",
+          "action": "edit.undo"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "label": "Add-in Development",
+  "position": 5,
+  "link": {
+    "type": "doc",
+    "id": "addins/overview"
+  }
+}
