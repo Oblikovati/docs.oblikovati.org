@@ -118,8 +118,73 @@ Palette and typography are taken verbatim from
    dark brand palette, working locale dropdown, and a Lua code block rendering
    with highlighting.
 
+## First content page: Keyboard Shortcuts
+
+The first real page is a **Keyboard Shortcuts** reference driven by the actual
+bindings the app ships, not a hand-written table. The bindings are the same
+catalog the head's Customize-Keyboard window renders
+(`app.Bindings().Catalog()`); we extract them once into committed JSON.
+
+### Extraction — Go dumper (Oblikovati GPL repo)
+
+- New headless command `cmd/keymap-dump/main.go` (GPL-2.0 header, no cgo):
+  `NewSession()` + `RegisterStandardCommands(s)`, walk `Bindings().Catalog()`,
+  keep only bound actions, and for each classify + group:
+  - `kind`: **keyboard** when the chord has a modifier (Ctrl/Alt/Shift) or a
+    named non-alpha key (F-keys, Escape, Delete, Enter, …); **alias** when the
+    chord is a bare multi-letter word (REC, POL, EL, EX, FF, MI, PT, SPL, SX) —
+    a command-window word, not a pressable chord.
+  - `group`: derived from the ActionID prefix — `file.*`/`GetStarted.*` → File,
+    `Create.*`/`Modify.*` → Feature, `Sketch.*` → Sketch, `View.*`/`view.*` →
+    View, `edit.*` → Edit, `tool.*` → Tool.
+- A `go test` guards the classifier and asserts the catalog is non-empty and
+  every emitted chord round-trips through `types.ParseChord`.
+- Output is written to the docs repo at `src/data/keybindings.json`;
+  regeneration is a documented manual step, so the docs build stays pure Node
+  (no Go dependency).
+
+Ground truth captured on 2026-07-06: **27 bound actions** — 18 keyboard chords
+(`Ctrl+N/S/W/Y/Z`, `Shift+A/C/D/E/F/H/L/R`, `F5`, `F6`, `Escape`, `Delete`,
+`Enter`) and 9 typed aliases.
+
+Data shape:
+
+```json
+{
+  "source": "oblikovati.org/app Bindings().Catalog()",
+  "shortcuts": [
+    { "actionId": "Create.Extrude", "displayName": "Extrude",
+      "group": "Feature", "kind": "keyboard",
+      "chord": { "key": "E", "shift": true }, "chordText": "Shift+E" },
+    { "actionId": "Sketch.Rectangle", "displayName": "Rectangle",
+      "group": "Sketch", "kind": "alias",
+      "chord": { "key": "REC" }, "chordText": "REC" }
+  ]
+}
+```
+
+### Rendering — KeyboardMap component (docs repo)
+
+- `src/components/KeyboardMap/`
+  - `isoLayout.js` — ISO 105-key geometry: rows of `{ label, code, width }`
+    with the L-shaped Enter and the extra key by the left Shift.
+  - `index.jsx` — inline **SVG ISO keyboard**; for every `kind:"keyboard"`
+    shortcut, highlight the base key and its modifier key(s) in the brand
+    accent, with a `<title>` tooltip naming the action; a legend; then two
+    grouped reference tables — **Keyboard shortcuts** (by File/Sketch/Feature/
+    View/Edit/Tool) and **Command-window aliases**.
+  - `styles.module.css` — brand key styling; highlight uses the signal gradient
+    on the dark surface.
+- `docs/reference/keyboard-shortcuts.mdx` — short intro prose + `<KeyboardMap/>`.
+  This is the site's first real content page; linked from the sidebar and intro.
+
+The SVG depicts only pressable chords; typed aliases render in their own table
+(honest to the binding model). The command window has a fuller vocabulary —
+documenting that is out of scope for this page.
+
 ## Out of scope
 
-- Writing the actual documentation content (only intro + placeholder stubs).
+- Writing the rest of the documentation content (only intro + this page + stubs).
 - Translating any content (only locale scaffolding).
 - Cutting a numbered docs version (versioning enabled; first cut done later).
+- The full command-window alias vocabulary (only the catalog's bound aliases).
