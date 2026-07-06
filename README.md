@@ -57,6 +57,22 @@ Run the generators from a checkout of the Oblikovati application repo after any 
 chord, command word, or alias changes. `keybindings.json` holds only pressable keyboard
 chords; the full command vocabulary (including typed aliases) lives in `commands.json`.
 
+### Add-in developer docs
+
+The **Add-in Development** section (`docs/addins/`) is synced from the sibling
+[Oblikovati.API](https://github.com/Oblikovati/Oblikovati.API) repo: the developer guides from
+its `docs/wiki/`, plus a per-package API reference rendered from the Go doc comments with
+[gomarkdoc](https://github.com/princjef/gomarkdoc). Regenerate after the API surface or those
+guides change:
+
+```bash
+go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
+OBLIKOVATI_API_DIR=../Oblikovati.API python3 scripts/sync-addin-docs.py
+```
+
+The sync enforces the same no-third-party-product policy as the API repo; it fails if any
+imported page names one.
+
 ## Deployment
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and then

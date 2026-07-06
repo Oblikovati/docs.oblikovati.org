@@ -20,6 +20,8 @@ language selector in the top bar) and is versioned alongside the application.
 - **[Keyboard Shortcuts](./reference/keyboard-shortcuts.mdx)** — the shipped key bindings,
   shown on a keyboard and in reference tables.
 - **[Commands](./reference/commands.mdx)** — every command the command window accepts.
+- **[Add-in Development](./addins/overview.md)** — build add-ins against the Apache-2.0 API,
+  with the full contract reference.
 
 :::note
 This documentation is under active construction. Content is being filled in

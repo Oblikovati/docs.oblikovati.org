@@ -1,0 +1,9 @@
+{
+  "label": "API Reference",
+  "position": 6,
+  "link": {
+    "type": "generated-index",
+    "slug": "/addins/api-reference",
+    "description": "Reference for every exported type, function and method in the Apache-2.0 add-in contract."
+  }
+}

@@ -18,7 +18,15 @@ const config = {
   projectName: 'docs.oblikovati.org',
 
   onBrokenLinks: 'throw',
+  // The gomarkdoc-generated add-in API reference cross-links symbols via `<a name="Symbol">`
+  // HTML anchors (which render and work in the browser) rather than heading slugs, so
+  // Docusaurus's static anchor checker cannot verify them. Page links are still validated.
+  onBrokenAnchors: 'ignore',
   markdown: {
+    // 'detect' parses .mdx as MDX (our interactive pages) and .md as CommonMark. The
+    // machine-generated add-in API reference pages are .md, so their Go code and raw HTML
+    // anchors are treated literally instead of as JSX.
+    format: 'detect',
     hooks: {
       onBrokenMarkdownLinks: 'warn',
     },

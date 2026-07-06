@@ -208,6 +208,27 @@ Ground truth captured on 2026-07-06: **211 commands across 13 area groups**.
 - `docs/reference/commands.mdx` — short intro + `<CommandReference/>`, cross-linked
   with the Keyboard Shortcuts page.
 
+## Add-in developer docs (synced from Oblikovati.API)
+
+The **Add-in Development** section is imported from the sibling Oblikovati.API
+repo, which already publishes it as a GitHub wiki. Rather than duplicate content,
+`scripts/sync-addin-docs.py` regenerates `docs/addins/` from that repo:
+
+- the hand-written developer guides (`docs/wiki/*.md`: overview, application &
+  API architecture, first steps, testing) — `[[wiki links]]` rewritten to
+  Docusaurus relative links, frontmatter added;
+- a per-package **API reference** (`types`, `contract`, `wire`, `client`)
+  rendered from the Go doc comments with `gomarkdoc`, one page each under an
+  `api-reference` generated-index category.
+
+Because the reference is machine-generated Go doc, the site sets
+`markdown.format: 'detect'` (so `.md` parse as CommonMark, not MDX) and
+`onBrokenAnchors: 'ignore'` (gomarkdoc uses `<a name>` anchors the static
+checker can't verify, though they work in-browser). The sync enforces the API
+repo's no-third-party-product policy; importing was blocked until 13 doc comments
+in Oblikovati.API that named Inventor were scrubbed (a separate PR there, which
+also unbroke that repo's own wiki-publish gate).
+
 ## Out of scope
 
 - Writing the rest of the documentation content (only intro + the Keyboard
