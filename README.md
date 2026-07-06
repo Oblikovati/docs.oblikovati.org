@@ -79,7 +79,10 @@ Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site a
 triggers a DigitalOcean App Platform deployment via `doctl`.
 
 The app is described declaratively in [`.do/app.yaml`](.do/app.yaml) (a Node static-site
-build, output `build/`), which the deploy workflow applies on each push.
+build, output `build/`). Each push to `main` triggers a fresh deployment of the latest commit
+(`doctl apps create-deployment --force-rebuild`). Changes to `.do/app.yaml` itself are applied
+separately with `doctl apps update <app-id> --spec .do/app.yaml` (the deploy workflow does not
+re-apply the spec, because an unchanged-spec update redeploys the previous commit).
 
 ### One-time bootstrap
 
