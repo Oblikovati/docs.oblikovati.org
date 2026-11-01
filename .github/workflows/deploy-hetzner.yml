@@ -1,0 +1,51 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE: ghcr.io/oblikovati/docs.oblikovati.org
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE }}:${{ github.sha }}
+      - name: Open K3s API tunnel
+        env:
+          HETZNER_SSH_KEY: ${{ secrets.HETZNER_SSH_KEY }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$HETZNER_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' '65.109.19.20 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2uONzdbVdL8rkEb1XNxil1OWuFZYJheESxuwEOfItw' > ~/.ssh/known_hosts
+          ssh -fN -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -L 16443:127.0.0.1:6443 root@65.109.19.20
+      - name: Deploy immutable image
+        env:
+          KUBECONFIG_HETZNER: ${{ secrets.KUBECONFIG_HETZNER }}
+          IMAGE_REF: ${{ env.IMAGE }}:${{ github.sha }}
+        run: |
+          printf '%s' "$KUBECONFIG_HETZNER" > kubeconfig
+          export KUBECONFIG="$PWD/kubeconfig"
+          sed "s|${IMAGE}:placeholder|${IMAGE_REF}|" deploy/kubernetes/production.yaml | kubectl apply -f -

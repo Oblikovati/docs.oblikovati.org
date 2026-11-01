@@ -75,6 +75,15 @@ imported page names one.
 
 ## Deployment
 
+The production site runs on the Hetzner K3s cluster. Pushes to `main` build an
+immutable GHCR image and apply `deploy/kubernetes/production.yaml`. The GitHub
+repository needs the `KUBECONFIG_HETZNER` secret. DNS must point
+`docs.oblikovati.org` to the cluster before the Let’s Encrypt HTTP challenge can
+complete.
+
+The former DigitalOcean App Platform configuration remains in `.do/app.yaml`
+only as migration history. It is not the production deployment contract.
+
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and then
 triggers a DigitalOcean App Platform deployment via `doctl`.
 
