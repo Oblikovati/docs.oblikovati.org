@@ -74,7 +74,7 @@ metadata:
   name: docs
   namespace: oblikovati
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-dns
 spec:
   ingressClassName: traefik
   rules:
