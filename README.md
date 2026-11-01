@@ -75,8 +75,13 @@ imported page names one.
 
 ## Deployment
 
-Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and then
-triggers a DigitalOcean App Platform deployment via `doctl`.
+The production site runs on the Hetzner K3s cluster. Pushes to `main` build an
+immutable GHCR image and apply `deploy/kubernetes/production.yaml`. The GitHub
+repository needs the `KUBECONFIG_HETZNER` secret. DNS must point
+`docs.oblikovati.org` to the cluster before the Let’s Encrypt HTTP challenge can
+complete.
+
+The former DigitalOcean App Platform configuration was removed after migration.
 
 The app is described declaratively in [`.do/app.yaml`](.do/app.yaml) (a Node static-site
 build, output `build/`). Each push to `main` triggers a fresh deployment of the latest commit
@@ -84,19 +89,5 @@ build, output `build/`). Each push to `main` triggers a fresh deployment of the 
 separately with `doctl apps update <app-id> --spec .do/app.yaml` (the deploy workflow does not
 re-apply the spec, because an unchanged-spec update redeploys the previous commit).
 
-### One-time bootstrap
-
-1. Create the app from the committed spec:
-   ```bash
-   doctl apps create --spec .do/app.yaml
-   ```
-   (Or, to convert an existing app such as the sample-html placeholder, run
-   `doctl apps update <app-id> --spec .do/app.yaml`.)
-2. Note the app id (`doctl apps list`).
-3. Add two GitHub repository secrets:
-   - `DIGITALOCEAN_ACCESS_TOKEN` — a DO API token with app write access
-   - `DO_APP_ID` — the app id from step 2
-4. Point DNS `docs.oblikovati.org` (CNAME) at the app's `*.ondigitalocean.app` hostname.
-   Until it resolves, drop the `domains:` block in the spec to deploy on the default URL.
 
 Pull requests run `.github/workflows/ci.yml`, which builds every locale as a merge gate.
