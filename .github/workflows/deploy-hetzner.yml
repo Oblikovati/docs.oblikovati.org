@@ -45,7 +45,11 @@ jobs:
         env:
           KUBECONFIG_HETZNER: ${{ secrets.KUBECONFIG_HETZNER }}
           IMAGE_REF: ${{ env.IMAGE }}:${{ github.sha }}
+          GHCR_PULL_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
         run: |
           printf '%s' "$KUBECONFIG_HETZNER" > kubeconfig
           export KUBECONFIG="$PWD/kubeconfig"
+          kubectl create secret docker-registry ghcr-pull --namespace oblikovati \
+            --docker-server=ghcr.io --docker-username=viniciusmiguel \
+            --docker-password="$GHCR_PULL_TOKEN" --dry-run=client -o yaml | kubectl apply -f -
           sed "s|${IMAGE}:placeholder|${IMAGE_REF}|" deploy/kubernetes/production.yaml | kubectl apply -f -
