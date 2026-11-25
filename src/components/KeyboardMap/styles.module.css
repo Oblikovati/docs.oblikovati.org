@@ -1,4 +1,4 @@
-/* KeyboardMap styling. Highlights use the brand "signal" accent on the dark ink surface. */
+/* KeyboardMap styling aligned with Oblikovati Design System v1.0. */
 
 .wrap {
   margin: 1.5rem 0 2rem;
@@ -7,13 +7,13 @@
 .svgWrap {
   overflow-x: auto;
   padding: 1rem 1.25rem;
-  border: 1px solid var(--ifm-toc-border-color);
-  border-radius: 12px;
+  border: 1px solid var(--obk-border, #2D313D);
+  border-radius: 6px;
   background:
-    linear-gradient(to right, rgba(94, 234, 212, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     var(--ifm-background-surface-color);
-  background-size: 46px 46px, 46px 46px, auto;
+  background-size: 48px 48px, 48px 48px, auto;
 }
 
 .svg {
@@ -24,23 +24,23 @@
 }
 
 .key {
-  fill: var(--ifm-card-background-color, #0e1626);
-  stroke: var(--ifm-toc-border-color, #1a2942);
+  fill: var(--ifm-card-background-color, #181A20);
+  stroke: var(--obk-border, #2D313D);
   stroke-width: 1;
 }
 
 .keyBase {
-  fill: var(--obk-signal, #38bdf8);
-  stroke: var(--obk-signal-soft, #5eead4);
+  fill: var(--obk-brand-fill, #6754E8);
+  stroke: var(--obk-brand, #8172FA);
 }
 
 .keyMod {
-  fill: rgba(56, 189, 248, 0.22);
-  stroke: rgba(94, 234, 212, 0.55);
+  fill: var(--obk-brand-subtle, rgba(129, 114, 250, 0.16));
+  stroke: var(--obk-selection-bright, #2DD4BF);
 }
 
 .keyLabel {
-  fill: var(--ifm-color-content, #cdd9e8);
+  fill: var(--ifm-color-content, #ECEEF2);
   font-family: var(--ifm-font-family-monospace);
   font-size: 11px;
   text-anchor: middle;
@@ -48,10 +48,10 @@
   pointer-events: none;
 }
 
-/* A highlighted command key gets dark ink text for contrast against the bright fill. */
+/* Highlighted command key gets white text on Indigo-Violet fill (WCAG AA). */
 .keyBase + .keyLabel,
 .keyBase ~ .keyLabel {
-  fill: #06121f;
+  fill: #FFFFFF;
 }
 
 .legend {
@@ -76,12 +76,12 @@
 }
 
 .swatchBase {
-  background: var(--obk-signal, #38bdf8);
+  background: var(--obk-brand-fill, #6754E8);
 }
 
 .swatchMod {
-  background: rgba(56, 189, 248, 0.22);
-  border: 1px solid rgba(94, 234, 212, 0.55);
+  background: var(--obk-brand-subtle, rgba(129, 114, 250, 0.16));
+  border: 1px solid var(--obk-selection-bright, #2DD4BF);
 }
 
 .group {

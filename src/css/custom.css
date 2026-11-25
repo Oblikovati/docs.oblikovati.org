@@ -1,80 +1,123 @@
 /**
- * Oblikovati docs theme. The palette and typography are taken verbatim from
- * website-oblikovati.org (tailwind.config.js + index.css) so the docs site reads as the
- * same product: a deep engineering-grade dark surface, the teal->sky "signal" accent, and
- * the Albert Sans / Newsreader / JetBrains Mono type system. The site is dark-first; a
- * legible light theme is kept for long-form reading.
+ * Oblikovati Docs Theme — aligned with Oblikovati Visual Identity & Design System v1.0.
+ * Aesthetic: Ultra-Minimal Technical | Palette: Calibrated Indigo-Violet & Crisp Teal
+ * Themes: Dark-First (Matte Carbon) + Light Mode Parity (Architectural Paper)
+ * Typography: Inter + JetBrains Mono
  */
 
 :root {
-  /* Brand accent: the logo gradient's sky endpoint (#38bdf8), with shades for Infima. */
-  --ifm-color-primary: #0ea5e9;
-  --ifm-color-primary-dark: #0d94d1;
-  --ifm-color-primary-darker: #0c8bc5;
-  --ifm-color-primary-darkest: #0a72a2;
-  --ifm-color-primary-light: #24b0ec;
-  --ifm-color-primary-lighter: #33b6ed;
-  --ifm-color-primary-lightest: #5bc5f1;
+  /* Light Mode Parity — Calibrated Indigo-Violet brand accent */
+  --ifm-color-primary: #5B46E8;
+  --ifm-color-primary-dark: #4D38D6;
+  --ifm-color-primary-darker: #402CC0;
+  --ifm-color-primary-darkest: #3422A3;
+  --ifm-color-primary-light: #6F5CED;
+  --ifm-color-primary-lighter: #7E6DF0;
+  --ifm-color-primary-lightest: #9E91FF;
 
-  --ifm-font-family-base: 'Newsreader', 'Iowan Old Style', Georgia, serif;
-  --ifm-heading-font-family: 'Albert Sans', Inter, ui-sans-serif, system-ui, sans-serif;
-  --ifm-font-family-monospace: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
-    Consolas, monospace;
+  /* Light Mode surfaces & borders (Architectural Paper) */
+  --ifm-background-color: #F6F7F9;
+  --ifm-background-surface-color: #FFFFFF;
+  --ifm-navbar-background-color: #ECEEF2;
+  --ifm-footer-background-color: #121317;
+  --ifm-card-background-color: #FFFFFF;
+  --ifm-color-content: #111318;
+  --ifm-color-content-secondary: #4B5263;
+  --ifm-toc-border-color: #E4E7EE;
+  --ifm-hr-border-color: #D1D6E0;
+
+  /* Oblikovati Typography System */
+  --ifm-font-family-base: 'Inter', 'Segoe UI Variable', 'Segoe UI', -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --ifm-heading-font-family: 'Inter', 'Segoe UI Variable', 'Segoe UI', -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'Cascadia Mono', 'Consolas',
+    ui-monospace, monospace;
 
   --ifm-code-font-size: 90%;
-  --ifm-heading-font-weight: 800;
+  --ifm-heading-font-weight: 600;
   --ifm-heading-letter-spacing: -0.02em;
-  --docusaurus-highlighted-code-line-bg: rgba(56, 189, 248, 0.12);
+  --docusaurus-highlighted-code-line-bg: rgba(91, 70, 232, 0.10);
 
-  /* Brand tokens reused by custom components (KeyboardMap). */
-  --obk-signal: #38bdf8;
-  --obk-signal-soft: #5eead4;
-  --obk-signal-deep: #0ea5e9;
+  /* Brand semantic tokens reused by custom components (KeyboardMap, CommandReference) */
+  --obk-brand: #5B46E8;
+  --obk-brand-fill: #5B46E8;
+  --obk-brand-subtle: rgba(91, 70, 232, 0.12);
+  --obk-selection: #0D9488;
+  --obk-selection-bright: #14B8A6;
+  --obk-border: #D1D6E0;
 }
 
-/* Dark is the brand default (website-oblikovati.org is dark-only). */
+/* Dark Mode Flagship — Matte Carbon surfaces + Indigo-Violet & Teal accents */
 [data-theme='dark'] {
-  --ifm-color-primary: #38bdf8;
-  --ifm-color-primary-dark: #1eb0f7;
-  --ifm-color-primary-darker: #0ea5e9;
-  --ifm-color-primary-darkest: #0b87bf;
-  --ifm-color-primary-light: #56c8f9;
-  --ifm-color-primary-lighter: #64ccfa;
-  --ifm-color-primary-lightest: #8fdafc;
+  --ifm-color-primary: #8172FA;
+  --ifm-color-primary-dark: #6754E8;
+  --ifm-color-primary-darker: #5845D6;
+  --ifm-color-primary-darkest: #4936C4;
+  --ifm-color-primary-light: #9487FB;
+  --ifm-color-primary-lighter: #A599FF;
+  --ifm-color-primary-lightest: #BFB5FF;
 
-  /* Deep engineering-grade dark surfaces (ink palette). */
-  --ifm-background-color: #070b14;
-  --ifm-background-surface-color: #0b1220;
-  --ifm-navbar-background-color: #0b1220;
-  --ifm-footer-background-color: #0b1220;
-  --ifm-card-background-color: #0e1626;
-  --ifm-color-content: #cdd9e8;
-  --ifm-color-content-secondary: #a9bace;
-  --ifm-toc-border-color: #1a2942;
-  --ifm-hr-border-color: #1a2942;
-  --docusaurus-highlighted-code-line-bg: rgba(56, 189, 248, 0.16);
+  --ifm-background-color: #0D0E11;
+  --ifm-background-surface-color: #121317;
+  --ifm-navbar-background-color: #121317;
+  --ifm-footer-background-color: #0D0E11;
+  --ifm-card-background-color: #181A20;
+  --ifm-color-content: #ECEEF2;
+  --ifm-color-content-secondary: #9CA3B2;
+  --ifm-toc-border-color: #22252E;
+  --ifm-hr-border-color: #2D313D;
+  --docusaurus-highlighted-code-line-bg: rgba(129, 114, 250, 0.16);
+
+  --obk-brand: #8172FA;
+  --obk-brand-fill: #6754E8;
+  --obk-brand-subtle: rgba(129, 114, 250, 0.16);
+  --obk-selection: #14B8A6;
+  --obk-selection-bright: #2DD4BF;
+  --obk-border: #2D313D;
 }
 
-/* Body is the reading serif; headings and the wordmark are the geometric display sans —
-   matching website-oblikovati.org's Overlay-derived type system. */
 body {
+  font-feature-settings: 'cv05' 1, 'tnum' 1;
   text-rendering: optimizeLegibility;
+}
+
+code,
+pre,
+kbd {
+  font-feature-settings: 'tnum' 1, 'zero' 1;
+}
+
+.navbar {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  box-shadow: none;
 }
 
 .navbar__title,
 .footer__title {
   font-family: var(--ifm-heading-font-family);
-  letter-spacing: -0.015em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 ::selection {
-  background-color: rgba(56, 189, 248, 0.28);
-  color: #e6edf6;
+  background-color: rgba(129, 114, 250, 0.28);
+  color: #ECEEF2;
 }
 
-/* Code blocks (incl. ```lua scripting samples) sit on an elevated ink surface. */
+[data-theme='light'] ::selection {
+  background-color: rgba(91, 70, 232, 0.22);
+  color: #111318;
+}
+
+/* Code blocks sit on an elevated Carbon surface with 1px hairline containment. */
 [data-theme='dark'] .theme-code-block,
 [data-theme='dark'] pre[class*='language-'] {
-  background-color: #0e1626 !important;
-  border: 1px solid #1a2942;
+  background-color: #181A20 !important;
+  border: 1px solid #2D313D;
+}
+
+[data-theme='light'] .theme-code-block,
+[data-theme='light'] pre[class*='language-'] {
+  border: 1px solid #D1D6E0;
 }

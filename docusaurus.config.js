@@ -56,7 +56,7 @@ const config = {
     },
   ],
   stylesheets: [
-    'https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap',
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap',
   ],
 
   presets: [

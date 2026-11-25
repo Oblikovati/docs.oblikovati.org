@@ -11,12 +11,12 @@
   font-size: 1rem;
   color: var(--ifm-color-content);
   background: var(--ifm-background-surface-color);
-  border: 1px solid var(--ifm-toc-border-color);
-  border-radius: 8px;
+  border: 1px solid var(--obk-border, #2D313D);
+  border-radius: 4px;
 }
 
 .filter:focus {
-  outline: 2px solid var(--obk-signal, #38bdf8);
+  outline: 2px solid var(--obk-brand, #8172FA);
   outline-offset: 1px;
   border-color: transparent;
 }

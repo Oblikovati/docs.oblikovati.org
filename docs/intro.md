@@ -6,24 +6,21 @@ title: Introduction
 
 # Oblikovati Documentation
 
-**Oblikovati** is a free, open-source, parametric, feature-based mechanical CAD
-application — the history-driven workflow you know from Inventor, SolidWorks and NX,
-running natively on Linux, macOS and Windows, with an open automation API.
+**Oblikovati** is open-source, parametric, feature-based mechanical CAD software.
+It provides a history-driven modeling workflow natively on Linux, macOS, and Windows,
+together with a documented Apache-2.0 automation API.
 
-This site is the product documentation. It is available in multiple languages (use the
-language selector in the top bar) and is versioned alongside the application.
+This documentation is versioned with the application and available in multiple
+languages through the selector in the top navigation bar.
 
-## Where to start
+## Reference index
 
-- **[Installation](./installation.md)** — download and install the latest nightly build.
-- **[Scripting with Lua](./scripting.mdx)** — automate modeling with the embedded Lua API.
-- **[Keyboard Shortcuts](./reference/keyboard-shortcuts.mdx)** — the shipped key bindings,
-  shown on a keyboard and in reference tables.
-- **[Commands](./reference/commands.mdx)** — every command the command window accepts.
-- **[Add-in Development](./addins/overview.md)** — build add-ins against the Apache-2.0 API,
-  with the full contract reference.
+- **[Installation](./installation.md)** — Download and install the latest build.
+- **[Scripting with Lua](./scripting.mdx)** — Automate modeling tasks with the embedded Lua API.
+- **[Keyboard Shortcuts](./reference/keyboard-shortcuts.mdx)** — View default key bindings on an interactive layout and reference tables.
+- **[Commands](./reference/commands.mdx)** — Search all commands accepted by the command window.
+- **[Add-in Development](./addins/overview.md)** — Build add-ins against the Apache-2.0 public contract.
 
 :::note
-This documentation is under active construction. Content is being filled in
-milestone by milestone.
+Documentation is updated continuously alongside application milestones.
 :::
