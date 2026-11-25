@@ -32,6 +32,11 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE }}:${{ github.sha }}
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@064b10558093f38325e838ddea35486bdc6b1d5c # v4
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+          hostname: docs-org-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Open K3s API tunnel
         env:
           HETZNER_SSH_KEY: ${{ secrets.HETZNER_SSH_KEY }}
@@ -39,8 +44,8 @@ jobs:
           install -d -m 700 ~/.ssh
           printf '%s\n' "$HETZNER_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          printf '%s\n' '65.109.19.20 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2uONzdbVdL8rkEb1XNxil1OWuFZYJheESxuwEOfItw' > ~/.ssh/known_hosts
-          ssh -fN -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -L 16443:127.0.0.1:6443 root@65.109.19.20
+          printf '%s\n' '[100.89.0.119]:2222 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO2uONzdbVdL8rkEb1XNxil1OWuFZYJheESxuwEOfItw' > ~/.ssh/known_hosts
+          ssh -fN -p 2222 -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes -o ExitOnForwardFailure=yes -o ConnectTimeout=20 -L 16443:127.0.0.1:6443 root@100.89.0.119
       - name: Deploy immutable image
         env:
           KUBECONFIG_HETZNER: ${{ secrets.KUBECONFIG_HETZNER }}
